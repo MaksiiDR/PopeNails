@@ -1,0 +1,108 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --color-bg: #FFF7F5;
+  --color-primary: #C97B8A;
+  --color-accent: #E8A0A8;
+  --color-dark: #4A2535;
+  --color-card-border: #F0D8D4;
+  --font-playfair: var(--font-playfair);
+  --font-nunito: var(--font-nunito);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  background-color: var(--color-bg);
+  color: var(--color-dark);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Scrollbar styling */
+::-webkit-scrollbar {
+  width: 6px;
+}
+::-webkit-scrollbar-track {
+  background: #FFF7F5;
+}
+::-webkit-scrollbar-thumb {
+  background: #E8A0A8;
+  border-radius: 3px;
+}
+
+/* Modal slide-up animation */
+@keyframes slideUp {
+  from {
+    transform: translateY(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+.animate-slide-up {
+  animation: slideUp 0.35s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+}
+
+.animate-fade-in {
+  animation: fadeIn 0.2s ease forwards;
+}
+
+.skeleton {
+  background: linear-gradient(90deg, #F0D8D4 25%, #FDE8E4 50%, #F0D8D4 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite;
+  border-radius: 12px;
+}
+
+/* Service button active state */
+.service-btn {
+  transition: all 0.2s ease;
+}
+.service-btn:active {
+  transform: scale(0.97);
+}
+
+/* Floating button pulse */
+@keyframes pulse-soft {
+  0%, 100% { box-shadow: 0 4px 24px rgba(201, 123, 138, 0.4); }
+  50% { box-shadow: 0 4px 32px rgba(201, 123, 138, 0.65); }
+}
+
+.fab-btn {
+  animation: pulse-soft 2.5s ease-in-out infinite;
+}
+
+/* Card hover */
+.appointment-card {
+  transition: transform 0.18s ease, box-shadow 0.18s ease;
+}
+.appointment-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(201, 123, 138, 0.18);
+}
+
+/* Input focus ring */
+.pn-input:focus {
+  outline: none;
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 3px rgba(201, 123, 138, 0.18);
+}
