@@ -1,6 +1,7 @@
 'use client'
 
 import { useEffect, useState, useCallback } from 'react'
+import Image from 'next/image'
 import { supabase, Appointment } from '@/lib/supabase'
 import AppointmentCard from './components/AppointmentCard'
 import AddAppointmentModal from './components/AddAppointmentModal'
@@ -95,15 +96,27 @@ export default function HomePage() {
         }}
       >
         <div className="max-w-[430px] mx-auto px-5 pt-12 pb-5">
-          <div className="flex items-start justify-between">
-            <div>
-              <h1
-                className="text-4xl font-bold text-white leading-tight"
-                style={{ fontFamily: 'var(--font-playfair)' }}
-              >
-                Pope Nails
-              </h1>
-              <p className="text-white/80 text-sm font-medium mt-0.5">Agenda de citas</p>
+          <div className="flex items-center justify-between">
+            <div className="flex items-center gap-3">
+              <div className="bg-white p-1 rounded-2xl shadow-md shrink-0">
+                <Image
+                  src="/logo.jpeg"
+                  alt="Pope Nails Logo"
+                  width={54}
+                  height={54}
+                  className="rounded-xl object-cover"
+                  priority
+                />
+              </div>
+              <div>
+                <h1
+                  className="text-3xl font-bold text-white leading-tight"
+                  style={{ fontFamily: 'var(--font-playfair)' }}
+                >
+                  Pope Nails
+                </h1>
+                <p className="text-white/80 text-sm font-medium mt-0.5">Agenda de citas</p>
+              </div>
             </div>
             {/* Appointment counter */}
             <div
