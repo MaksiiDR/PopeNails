@@ -106,3 +106,16 @@ body {
   border-color: var(--color-primary);
   box-shadow: 0 0 0 3px rgba(26, 26, 26, 0.1);
 }
+
+/* Smooth accordion grid transition */
+.grid-accordion {
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.grid-accordion.open {
+  grid-template-rows: 1fr;
+}
+.grid-accordion-inner {
+  overflow: hidden;
+}

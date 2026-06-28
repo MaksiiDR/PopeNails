@@ -40,6 +40,7 @@ export default function HomePage() {
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
   const [showModal, setShowModal] = useState(false)
+  const [showPast, setShowPast] = useState(false)
 
   const fetchAppointments = useCallback(async () => {
     setLoading(true)
@@ -84,6 +85,11 @@ export default function HomePage() {
 
   const grouped = groupByDate(appointments)
   const sortedDates = Object.keys(grouped).sort()
+  
+  const todayStr = new Date().toISOString().split('T')[0]
+  const upcomingDates = sortedDates.filter(d => d >= todayStr)
+  // Most recent past dates first
+  const pastDates = sortedDates.filter(d => d < todayStr).reverse()
 
   return (
     <div className="min-h-screen" style={{ backgroundColor: '#FAFAFA' }}>
@@ -96,24 +102,15 @@ export default function HomePage() {
       >
         <div className="max-w-[430px] mx-auto px-5 pt-12 pb-5">
           <div className="flex items-center justify-between">
-            <div className="flex items-center gap-3">
+            <div className="flex items-center">
               <Image
-                src="/logo.jpeg"
+                src="/logo.png"
                 alt="Pope Nails Logo"
-                width={54}
-                height={54}
-                className="rounded-xl object-cover shrink-0"
+                width={160}
+                height={60}
+                className="object-contain shrink-0"
                 priority
               />
-              <div>
-                <h1
-                  className="text-3xl font-bold leading-tight"
-                  style={{ fontFamily: 'var(--font-playfair)', color: '#1A1A1A' }}
-                >
-                  Pope Nails
-                </h1>
-                <p className="text-sm font-medium mt-0.5" style={{ color: '#666666' }}>Agenda de citas</p>
-              </div>
             </div>
             {/* Appointment counter */}
             <div
@@ -176,10 +173,19 @@ export default function HomePage() {
           </div>
         )}
 
-        {/* Appointments grouped by date */}
-        {!loading && !error && sortedDates.length > 0 && (
+        {/* No upcoming appointments but past exist */}
+        {!loading && !error && appointments.length > 0 && upcomingDates.length === 0 && (
+          <div className="text-center py-8">
+            <p className="text-sm font-medium" style={{ color: '#666666' }}>
+              No hay citas próximas programadas.
+            </p>
+          </div>
+        )}
+
+        {/* Upcoming Appointments */}
+        {!loading && !error && upcomingDates.length > 0 && (
           <div className="space-y-6">
-            {sortedDates.map(date => (
+            {upcomingDates.map(date => (
               <section key={date}>
                 {/* Date header */}
                 <h2
@@ -201,9 +207,64 @@ export default function HomePage() {
             ))}
           </div>
         )}
+
+        {/* Past Appointments */}
+        {!loading && !error && pastDates.length > 0 && (
+          <div className="mt-10 mb-6">
+            <button 
+              onClick={() => setShowPast(!showPast)}
+              className="w-full flex items-center gap-3 mb-2 px-1 transition-opacity hover:opacity-70 text-left"
+            >
+              <h2
+                className="text-lg font-bold flex items-center gap-2"
+                style={{ fontFamily: 'var(--font-playfair)', color: '#1A1A1A' }}
+              >
+                Citas Pasadas
+                <span className="text-xs text-gray-400 mt-1">{showPast ? '▲' : '▼'}</span>
+              </h2>
+              <div className="flex-1 h-px bg-gray-200"></div>
+            </button>
+            
+            <div className={`grid-accordion ${showPast ? 'open' : ''}`}>
+              <div className="grid-accordion-inner">
+                <div className="space-y-6 opacity-75 pt-3">
+                  {pastDates.map(date => (
+                    <section key={date}>
+                      {/* Date header */}
+                      <h2
+                        className="capitalize font-bold text-sm mb-2.5 px-1"
+                        style={{ color: '#666666' }}
+                      >
+                        {formatDateHeader(date)}
+                      </h2>
+                      <div className="space-y-2.5">
+                        {grouped[date].map(apt => (
+                          <AppointmentCard
+                            key={apt.id}
+                            appointment={apt}
+                            onDelete={handleDelete}
+                          />
+                        ))}
+                      </div>
+                    </section>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
       </main>
 
-      {/* Floating Action Button */}
+      {/* Floating Action Buttons */}
+      <a
+        href="/compras"
+        className="fab-btn fixed bottom-7 left-1/2 -translate-x-[calc(215px-28px)] flex items-center justify-center w-14 h-14 rounded-full text-white text-2xl font-light shadow-lg transition-transform hover:scale-110 active:scale-95 z-40"
+        style={{ backgroundColor: '#1A1A1A' }}
+        aria-label="Ver compras"
+      >
+        🛍️
+      </a>
+      
       <button
         id="btn-add-appointment"
         onClick={() => setShowModal(true)}

@@ -14,3 +14,9 @@ export type Appointment = {
   date: string
   time: string
 }
+
+export type ShoppingItem = {
+  id: string
+  name: string
+  created_at: string
+}
