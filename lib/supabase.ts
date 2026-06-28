@@ -9,7 +9,7 @@ export type Appointment = {
   id: string
   created_at: string
   client_name: string
-  service: 'gel' | 'semi'
+  service: 'gel' | 'semi' | 'retiro' | 'retiro_otras'
   price: number
   date: string
   time: string

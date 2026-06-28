@@ -5,7 +5,7 @@ import { supabase } from '@/lib/supabase'
 
 type NewAppointment = {
   client_name: string
-  service: 'gel' | 'semi' | null
+  service: 'gel' | 'semi' | 'retiro' | 'retiro_otras' | null
   price: number
   date: string
   time: string
@@ -27,11 +27,17 @@ export default function AddAppointmentModal({ onClose, onSaved }: Props) {
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
 
-  const selectService = (service: 'gel' | 'semi') => {
+  const selectService = (service: 'gel' | 'semi' | 'retiro' | 'retiro_otras') => {
+    let basePrice = 0;
+    if (service === 'gel') basePrice = 13000;
+    else if (service === 'semi') basePrice = 7000;
+    else if (service === 'retiro') basePrice = 2000;
+    else if (service === 'retiro_otras') basePrice = 3000;
+
     setForm(prev => ({
       ...prev,
       service,
-      price: service === 'gel' ? 10000 : 5000,
+      price: basePrice,
     }))
   }
 
@@ -125,6 +131,7 @@ export default function AddAppointmentModal({ onClose, onSaved }: Props) {
           <div className="grid grid-cols-2 gap-3">
             <button
               id="btn-service-gel"
+              type="button"
               onClick={() => selectService('gel')}
               className="service-btn rounded-2xl border-2 p-4 text-left transition-all"
               style={{
@@ -134,10 +141,11 @@ export default function AddAppointmentModal({ onClose, onSaved }: Props) {
             >
               <div className="text-2xl mb-1">💅</div>
               <div className="font-bold text-sm" style={{ color: '#4A2535' }}>Soft Gel</div>
-              <div className="text-xs font-semibold mt-0.5" style={{ color: '#C97B8A' }}>$10.000</div>
+              <div className="text-xs font-semibold mt-0.5" style={{ color: '#C97B8A' }}>$13.000</div>
             </button>
             <button
               id="btn-service-semi"
+              type="button"
               onClick={() => selectService('semi')}
               className="service-btn rounded-2xl border-2 p-4 text-left transition-all"
               style={{
@@ -147,9 +155,57 @@ export default function AddAppointmentModal({ onClose, onSaved }: Props) {
             >
               <div className="text-2xl mb-1">✨</div>
               <div className="font-bold text-sm" style={{ color: '#4A2535' }}>Semi Permanente</div>
-              <div className="text-xs font-semibold mt-0.5" style={{ color: '#7B9EC9' }}>$5.000</div>
+              <div className="text-xs font-semibold mt-0.5" style={{ color: '#7B9EC9' }}>$7.000</div>
+            </button>
+            <button
+              id="btn-service-retiro"
+              type="button"
+              onClick={() => selectService('retiro')}
+              className="service-btn rounded-2xl border-2 p-4 text-left transition-all"
+              style={{
+                borderColor: form.service === 'retiro' ? '#9B7B85' : '#F0D8D4',
+                backgroundColor: form.service === 'retiro' ? '#F4EBEF' : '#FFF7F5',
+              }}
+            >
+              <div className="text-2xl mb-1">🧼</div>
+              <div className="font-bold text-sm" style={{ color: '#4A2535' }}>Retiro de uñas</div>
+              <div className="text-xs font-semibold mt-0.5" style={{ color: '#9B7B85' }}>$2.000</div>
+            </button>
+            <button
+              id="btn-service-retiro-otras"
+              type="button"
+              onClick={() => selectService('retiro_otras')}
+              className="service-btn rounded-2xl border-2 p-4 text-left transition-all"
+              style={{
+                borderColor: form.service === 'retiro_otras' ? '#B88691' : '#F0D8D4',
+                backgroundColor: form.service === 'retiro_otras' ? '#FAEBEF' : '#FFF7F5',
+              }}
+            >
+              <div className="text-2xl mb-1">🧴</div>
+              <div className="font-bold text-[13px] leading-tight" style={{ color: '#4A2535' }}>Retiro (Otras)</div>
+              <div className="text-xs font-semibold mt-1" style={{ color: '#B88691' }}>$3.000</div>
             </button>
           </div>
+        </div>
+
+        {/* Total Price (Editable) */}
+        <div className="mb-4">
+          <label className="block text-sm font-semibold mb-1.5" style={{ color: '#4A2535' }}>
+            Precio Total ($) - <span className="font-normal text-xs" style={{ color: '#9B7B85' }}>Modificable por diseño</span>
+          </label>
+          <input
+            id="price-input"
+            type="number"
+            placeholder="Ej: 15000"
+            value={form.price || ''}
+            onChange={e => setForm(prev => ({ ...prev, price: parseInt(e.target.value) || 0 }))}
+            className="pn-input w-full rounded-xl border-2 px-4 py-3 text-base transition-all"
+            style={{
+              borderColor: '#F0D8D4',
+              backgroundColor: '#FFF7F5',
+              color: '#4A2535',
+            }}
+          />
         </div>
 
         {/* Date */}

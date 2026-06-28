@@ -21,7 +21,27 @@ function formatPrice(price: number): string {
 }
 
 export default function AppointmentCard({ appointment, onDelete }: Props) {
-  const isGel = appointment.service === 'gel'
+  let icon = '💅'
+  let label = 'Soft Gel'
+  let bgColor = '#FDE8E4'
+  let textColor = '#C97B8A'
+
+  if (appointment.service === 'semi') {
+    icon = '✨'
+    label = 'Semi Permanente'
+    bgColor = '#E8F0FB'
+    textColor = '#5A82B4'
+  } else if (appointment.service === 'retiro') {
+    icon = '🧼'
+    label = 'Retiro de uñas'
+    bgColor = '#F4EBEF'
+    textColor = '#9B7B85'
+  } else if (appointment.service === 'retiro_otras') {
+    icon = '🧴'
+    label = 'Retiro (Otras)'
+    bgColor = '#FAEBEF'
+    textColor = '#B88691'
+  }
 
   return (
     <div
@@ -44,9 +64,9 @@ export default function AppointmentCard({ appointment, onDelete }: Props) {
         {/* Service icon */}
         <div
           className="w-11 h-11 flex items-center justify-center rounded-2xl text-xl flex-shrink-0"
-          style={{ backgroundColor: isGel ? '#FDE8E4' : '#E8F0FB' }}
+          style={{ backgroundColor: bgColor }}
         >
-          {isGel ? '💅' : '✨'}
+          {icon}
         </div>
 
         {/* Info */}
@@ -63,11 +83,11 @@ export default function AppointmentCard({ appointment, onDelete }: Props) {
             <span
               className="text-xs font-semibold px-2 py-0.5 rounded-full"
               style={{
-                backgroundColor: isGel ? '#FDE8E4' : '#E8F0FB',
-                color: isGel ? '#C97B8A' : '#5A82B4',
+                backgroundColor: bgColor,
+                color: textColor,
               }}
             >
-              {isGel ? 'Soft Gel' : 'Semi Permanente'}
+              {label}
             </span>
           </div>
         </div>
