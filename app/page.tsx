@@ -100,14 +100,14 @@ export default function HomePage() {
           boxShadow: '0 4px 20px rgba(0, 0, 0, 0.05)',
         }}
       >
-        <div className="max-w-[430px] mx-auto px-5 pt-12 pb-5">
+        <div className="max-w-[430px] mx-auto px-5 pt-8 pb-4">
           <div className="flex items-center justify-between">
             <div className="flex items-center">
               <Image
                 src="/logo.png"
                 alt="Pope Nails Logo"
-                width={160}
-                height={60}
+                width={120}
+                height={45}
                 className="object-contain shrink-0"
                 priority
               />

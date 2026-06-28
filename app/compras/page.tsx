@@ -11,7 +11,7 @@ export default function ComprasPage() {
           boxShadow: '0 4px 20px rgba(0, 0, 0, 0.05)',
         }}
       >
-        <div className="max-w-[430px] mx-auto px-5 pt-12 pb-5 flex items-center gap-4">
+        <div className="max-w-[430px] mx-auto px-5 pt-8 pb-4 flex items-center gap-4">
           <Link 
             href="/"
             className="flex items-center justify-center w-10 h-10 rounded-full transition-colors hover:bg-gray-100"
