@@ -27,7 +27,7 @@ export const metadata: Metadata = {
 }
 
 export const viewport: Viewport = {
-  themeColor: '#C97B8A',
+  themeColor: '#FFFFFF',
 }
 
 export default function RootLayout({
@@ -42,7 +42,7 @@ export default function RootLayout({
         <meta name="apple-mobile-web-app-capable" content="yes" />
         <meta name="apple-mobile-web-app-status-bar-style" content="default" />
         <meta name="apple-mobile-web-app-title" content="Pope Nails" />
-        <meta name="theme-color" content="#C97B8A" />
+        <meta name="theme-color" content="#FFFFFF" />
         <link rel="apple-touch-icon" href="/icon-192.png" />
       </head>
       <body className={nunito.className}>

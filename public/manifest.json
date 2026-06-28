@@ -3,8 +3,8 @@
   "short_name": "Pope Nails",
   "start_url": "/",
   "display": "standalone",
-  "background_color": "#FFF7F5",
-  "theme_color": "#C97B8A",
+  "background_color": "#FAFAFA",
+  "theme_color": "#FFFFFF",
   "icons": [
     {
       "src": "/icon-192.png",

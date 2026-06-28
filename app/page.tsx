@@ -204,14 +204,6 @@ export default function HomePage() {
       </main>
 
       {/* Floating Action Button */}
-      {/* Debug shortcut for standalone mode testing */}
-      <a
-        href="/debug"
-        className="fixed bottom-7 left-1/2 -translate-x-[calc(215px-28px)] flex items-center justify-center h-14 rounded-full text-white px-4 font-bold shadow-lg transition-transform hover:scale-105 active:scale-95 z-40"
-        style={{ backgroundColor: '#333333' }}
-      >
-        🔍 Debug
-      </a>
       <button
         id="btn-add-appointment"
         onClick={() => setShowModal(true)}

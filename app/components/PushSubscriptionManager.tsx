@@ -90,26 +90,26 @@ export default function PushSubscriptionManager() {
         <div
           className="rounded-2xl p-4 flex items-start gap-3 shadow-lg"
           style={{
-            backgroundColor: '#FFF7F5',
-            border: '1.5px solid #F0D8D4',
-            boxShadow: '0 8px 32px rgba(201, 123, 138, 0.25)',
+            backgroundColor: '#FAFAFA',
+            border: '1.5px solid #E5E5E5',
+            boxShadow: '0 8px 32px rgba(26, 26, 26, 0.15)',
           }}
         >
           <span className="text-2xl flex-shrink-0 mt-0.5">📲</span>
           <div className="flex-1 min-w-0">
-            <p className="font-bold text-sm" style={{ color: '#4A2535' }}>
+            <p className="font-bold text-sm" style={{ color: '#1A1A1A' }}>
               Abre la app desde el ícono
             </p>
-            <p className="text-xs mt-1 leading-snug" style={{ color: '#9B7B85' }}>
+            <p className="text-xs mt-1 leading-snug" style={{ color: '#666666' }}>
               Para recibir notificaciones en iPhone, abrí la app desde el ícono en tu pantalla de inicio (no desde Safari).
             </p>
-            <p className="text-xs mt-1 leading-snug" style={{ color: '#9B7B85' }}>
+            <p className="text-xs mt-1 leading-snug" style={{ color: '#666666' }}>
               ¿No lo agregaste aún? Tocá el botón <strong>Compartir 〔⬆︎〕</strong> y luego <strong>«Agregar a pantalla de inicio»</strong>.
             </p>
             <button
               onClick={() => setShowIOSGuide(false)}
-              className="mt-3 w-full rounded-xl py-2 text-xs font-bold transition-all"
-              style={{ backgroundColor: '#F0D8D4', color: '#4A2535' }}
+              className="mt-3 w-full rounded-xl py-2 text-xs font-bold transition-all border-2"
+              style={{ backgroundColor: '#FAFAFA', borderColor: '#E5E5E5', color: '#1A1A1A' }}
             >
               Entendido
             </button>
@@ -129,17 +129,17 @@ export default function PushSubscriptionManager() {
         <div
           className="rounded-2xl p-4 flex items-start gap-3 shadow-lg"
           style={{
-            backgroundColor: '#FFF7F5',
-            border: '1.5px solid #F0D8D4',
-            boxShadow: '0 8px 32px rgba(201, 123, 138, 0.2)',
+            backgroundColor: '#FAFAFA',
+            border: '1.5px solid #E5E5E5',
+            boxShadow: '0 8px 32px rgba(26, 26, 26, 0.1)',
           }}
         >
           <span className="text-2xl flex-shrink-0 mt-0.5">🔔</span>
           <div className="flex-1 min-w-0">
-            <p className="font-bold text-sm" style={{ color: '#4A2535' }}>
+            <p className="font-bold text-sm" style={{ color: '#1A1A1A' }}>
               Activar recordatorios
             </p>
-            <p className="text-xs mt-0.5 leading-snug" style={{ color: '#9B7B85' }}>
+            <p className="text-xs mt-0.5 leading-snug" style={{ color: '#666666' }}>
               Recibe notificaciones 24 h antes de cada cita para no olvidar ninguna.
             </p>
             <div className="flex gap-2 mt-3">
@@ -147,15 +147,15 @@ export default function PushSubscriptionManager() {
                 id="btn-allow-notifications"
                 onClick={handleAllow}
                 className="flex-1 rounded-xl py-2 text-xs font-bold text-white transition-all hover:opacity-90"
-                style={{ backgroundColor: '#C97B8A' }}
+                style={{ backgroundColor: '#1A1A1A' }}
               >
                 Activar
               </button>
               <button
                 id="btn-dismiss-notifications"
                 onClick={handleDismiss}
-                className="flex-1 rounded-xl py-2 text-xs font-bold transition-all hover:opacity-80"
-                style={{ backgroundColor: '#F0D8D4', color: '#4A2535' }}
+                className="flex-1 rounded-xl py-2 text-xs font-bold transition-all hover:opacity-80 border-2"
+                style={{ backgroundColor: '#FAFAFA', borderColor: '#E5E5E5', color: '#1A1A1A' }}
               >
                 Ahora no
               </button>
@@ -175,7 +175,7 @@ export default function PushSubscriptionManager() {
       >
         <div
           className="rounded-2xl px-4 py-2.5 flex items-center gap-2 text-sm font-semibold text-white shadow-lg"
-          style={{ backgroundColor: '#C97B8A' }}
+          style={{ backgroundColor: '#1A1A1A' }}
         >
           <span>🔔</span>
           <span>Recordatorios activados</span>
