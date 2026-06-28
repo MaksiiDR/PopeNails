@@ -3,11 +3,11 @@
 @tailwind utilities;
 
 :root {
-  --color-bg: #FFF7F5;
-  --color-primary: #C97B8A;
-  --color-accent: #E8A0A8;
-  --color-dark: #4A2535;
-  --color-card-border: #F0D8D4;
+  --color-bg: #FAFAFA;
+  --color-primary: #1A1A1A;
+  --color-accent: #333333;
+  --color-dark: #1A1A1A;
+  --color-card-border: #E5E5E5;
   --font-playfair: var(--font-playfair);
   --font-nunito: var(--font-nunito);
 }
@@ -29,10 +29,10 @@ body {
   width: 6px;
 }
 ::-webkit-scrollbar-track {
-  background: #FFF7F5;
+  background: #FAFAFA;
 }
 ::-webkit-scrollbar-thumb {
-  background: #E8A0A8;
+  background: #1A1A1A;
   border-radius: 3px;
 }
 
@@ -67,7 +67,7 @@ body {
 }
 
 .skeleton {
-  background: linear-gradient(90deg, #F0D8D4 25%, #FDE8E4 50%, #F0D8D4 75%);
+  background: linear-gradient(90deg, #E5E5E5 25%, #F5F5F5 50%, #E5E5E5 75%);
   background-size: 200% 100%;
   animation: shimmer 1.5s infinite;
   border-radius: 12px;
@@ -83,8 +83,8 @@ body {
 
 /* Floating button pulse */
 @keyframes pulse-soft {
-  0%, 100% { box-shadow: 0 4px 24px rgba(201, 123, 138, 0.4); }
-  50% { box-shadow: 0 4px 32px rgba(201, 123, 138, 0.65); }
+  0%, 100% { box-shadow: 0 4px 24px rgba(26, 26, 26, 0.25); }
+  50% { box-shadow: 0 4px 32px rgba(26, 26, 26, 0.4); }
 }
 
 .fab-btn {
@@ -97,12 +97,12 @@ body {
 }
 .appointment-card:hover {
   transform: translateY(-2px);
-  box-shadow: 0 8px 24px rgba(201, 123, 138, 0.18);
+  box-shadow: 0 8px 24px rgba(26, 26, 26, 0.08);
 }
 
 /* Input focus ring */
 .pn-input:focus {
   outline: none;
   border-color: var(--color-primary);
-  box-shadow: 0 0 0 3px rgba(201, 123, 138, 0.18);
+  box-shadow: 0 0 0 3px rgba(26, 26, 26, 0.1);
 }

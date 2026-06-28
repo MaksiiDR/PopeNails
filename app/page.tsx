@@ -86,47 +86,44 @@ export default function HomePage() {
   const sortedDates = Object.keys(grouped).sort()
 
   return (
-    <div className="min-h-screen" style={{ backgroundColor: '#FFF7F5' }}>
+    <div className="min-h-screen" style={{ backgroundColor: '#FAFAFA' }}>
       {/* Header */}
       <header
-        className="w-full sticky top-0 z-40"
+        className="w-full sticky top-0 z-40 bg-white"
         style={{
-          background: 'linear-gradient(135deg, #E8A0A8 0%, #C97B8A 100%)',
-          boxShadow: '0 4px 20px rgba(201, 123, 138, 0.3)',
+          boxShadow: '0 4px 20px rgba(0, 0, 0, 0.05)',
         }}
       >
         <div className="max-w-[430px] mx-auto px-5 pt-12 pb-5">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-3">
-              <div className="bg-white p-1 rounded-2xl shadow-md shrink-0">
-                <Image
-                  src="/logo.jpeg"
-                  alt="Pope Nails Logo"
-                  width={54}
-                  height={54}
-                  className="rounded-xl object-cover"
-                  priority
-                />
-              </div>
+              <Image
+                src="/logo.jpeg"
+                alt="Pope Nails Logo"
+                width={54}
+                height={54}
+                className="rounded-xl object-cover shrink-0"
+                priority
+              />
               <div>
                 <h1
-                  className="text-3xl font-bold text-white leading-tight"
-                  style={{ fontFamily: 'var(--font-playfair)' }}
+                  className="text-3xl font-bold leading-tight"
+                  style={{ fontFamily: 'var(--font-playfair)', color: '#1A1A1A' }}
                 >
                   Pope Nails
                 </h1>
-                <p className="text-white/80 text-sm font-medium mt-0.5">Agenda de citas</p>
+                <p className="text-sm font-medium mt-0.5" style={{ color: '#666666' }}>Agenda de citas</p>
               </div>
             </div>
             {/* Appointment counter */}
             <div
               className="mt-1 px-4 py-2 rounded-2xl text-center"
-              style={{ backgroundColor: 'rgba(255,255,255,0.2)' }}
+              style={{ backgroundColor: '#F5F5F5' }}
             >
-              <span className="block text-2xl font-bold text-white">
+              <span className="block text-2xl font-bold" style={{ color: '#1A1A1A' }}>
                 {loading ? '—' : appointments.length}
               </span>
-              <span className="block text-[10px] text-white/80 font-semibold uppercase tracking-wide">
+              <span className="block text-[10px] font-semibold uppercase tracking-wide" style={{ color: '#666666' }}>
                 {appointments.length === 1 ? 'Cita' : 'Citas'}
               </span>
             </div>
@@ -149,14 +146,14 @@ export default function HomePage() {
         {!loading && error && (
           <div
             className="rounded-2xl p-5 text-center"
-            style={{ backgroundColor: '#FDE8E4', color: '#C97B8A' }}
+            style={{ backgroundColor: '#F5F5F5', color: '#1A1A1A' }}
           >
             <p className="text-2xl mb-2">😔</p>
             <p className="font-semibold text-sm">{error}</p>
             <button
               onClick={fetchAppointments}
               className="mt-3 text-sm font-bold underline"
-              style={{ color: '#C97B8A' }}
+              style={{ color: '#1A1A1A' }}
             >
               Intentar de nuevo
             </button>
@@ -169,11 +166,11 @@ export default function HomePage() {
             <div className="text-6xl mb-4">💅</div>
             <h2
               className="text-xl font-bold mb-2"
-              style={{ fontFamily: 'var(--font-playfair)', color: '#4A2535' }}
+              style={{ fontFamily: 'var(--font-playfair)', color: '#1A1A1A' }}
             >
               Sin citas por ahora
             </h2>
-            <p className="text-sm" style={{ color: '#9B7B85' }}>
+            <p className="text-sm" style={{ color: '#666666' }}>
               Toca el botón <strong>+</strong> para agregar tu primera cita.
             </p>
           </div>
@@ -187,7 +184,7 @@ export default function HomePage() {
                 {/* Date header */}
                 <h2
                   className="capitalize font-bold text-sm mb-2.5 px-1"
-                  style={{ color: '#9B7B85' }}
+                  style={{ color: '#666666' }}
                 >
                   {formatDateHeader(date)}
                 </h2>
@@ -211,7 +208,7 @@ export default function HomePage() {
       <a
         href="/debug"
         className="fixed bottom-7 left-1/2 -translate-x-[calc(215px-28px)] flex items-center justify-center h-14 rounded-full text-white px-4 font-bold shadow-lg transition-transform hover:scale-105 active:scale-95 z-40"
-        style={{ backgroundColor: '#4A2535' }}
+        style={{ backgroundColor: '#333333' }}
       >
         🔍 Debug
       </a>
@@ -219,7 +216,7 @@ export default function HomePage() {
         id="btn-add-appointment"
         onClick={() => setShowModal(true)}
         className="fab-btn fixed bottom-7 right-1/2 translate-x-[calc(215px-28px)] flex items-center justify-center w-14 h-14 rounded-full text-white text-3xl font-light shadow-lg transition-transform hover:scale-110 active:scale-95 z-40"
-        style={{ backgroundColor: '#C97B8A' }}
+        style={{ backgroundColor: '#1A1A1A' }}
         aria-label="Agregar cita"
       >
         +

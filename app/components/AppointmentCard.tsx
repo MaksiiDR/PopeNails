@@ -23,37 +23,37 @@ function formatPrice(price: number): string {
 export default function AppointmentCard({ appointment, onDelete }: Props) {
   let icon = '💅'
   let label = 'Soft Gel'
-  let bgColor = '#FDE8E4'
-  let textColor = '#C97B8A'
+  let bgColor = '#F5F0E6'
+  let textColor = '#4A3C31'
 
   if (appointment.service === 'semi') {
     icon = '✨'
     label = 'Semi Permanente'
-    bgColor = '#E8F0FB'
-    textColor = '#5A82B4'
+    bgColor = '#E8ECEF'
+    textColor = '#2C332D'
   } else if (appointment.service === 'retiro') {
     icon = '🧼'
     label = 'Retiro de uñas'
-    bgColor = '#F4EBEF'
-    textColor = '#9B7B85'
+    bgColor = '#F0F0F0'
+    textColor = '#666666'
   } else if (appointment.service === 'retiro_otras') {
     icon = '🧴'
     label = 'Retiro (Otras)'
-    bgColor = '#FAEBEF'
-    textColor = '#B88691'
+    bgColor = '#E5E5E5'
+    textColor = '#1A1A1A'
   }
 
   return (
     <div
       className="appointment-card relative bg-white rounded-2xl p-4 border"
-      style={{ borderColor: '#F0D8D4' }}
+      style={{ borderColor: '#E5E5E5' }}
     >
       {/* Delete button */}
       <button
         id={`delete-${appointment.id}`}
         onClick={() => onDelete(appointment.id)}
-        className="absolute top-3 right-3 w-7 h-7 flex items-center justify-center rounded-full text-sm font-bold transition-all hover:bg-red-50"
-        style={{ color: '#C97B8A' }}
+        className="absolute top-3 right-3 w-7 h-7 flex items-center justify-center rounded-full text-sm font-bold transition-all hover:bg-gray-100"
+        style={{ color: '#1A1A1A' }}
         aria-label="Eliminar cita"
         title="Eliminar cita"
       >
@@ -73,7 +73,7 @@ export default function AppointmentCard({ appointment, onDelete }: Props) {
         <div className="flex-1 min-w-0">
           <p
             className="font-bold text-base truncate leading-tight"
-            style={{ color: '#4A2535' }}
+            style={{ color: '#1A1A1A' }}
           >
             {appointment.client_name}
           </p>
@@ -94,10 +94,10 @@ export default function AppointmentCard({ appointment, onDelete }: Props) {
 
         {/* Price & time */}
         <div className="text-right flex-shrink-0">
-          <p className="font-bold text-base" style={{ color: '#C97B8A' }}>
+          <p className="font-bold text-base" style={{ color: '#1A1A1A' }}>
             {formatPrice(appointment.price)}
           </p>
-          <p className="text-xs font-medium mt-0.5" style={{ color: '#9B7B85' }}>
+          <p className="text-xs font-medium mt-0.5" style={{ color: '#666666' }}>
             {formatTime(appointment.time)}
           </p>
         </div>

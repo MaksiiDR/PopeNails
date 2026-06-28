@@ -86,26 +86,26 @@ export default function AddAppointmentModal({ onClose, onSaved }: Props) {
   return (
     <div
       className="fixed inset-0 z-50 flex items-end justify-center animate-fade-in"
-      style={{ backgroundColor: 'rgba(74, 37, 53, 0.45)' }}
+      style={{ backgroundColor: 'rgba(26, 26, 26, 0.45)' }}
       onClick={(e) => { if (e.target === e.currentTarget) onClose() }}
     >
       <div
         className="w-full max-w-[430px] bg-white rounded-t-3xl p-6 pb-10 animate-slide-up"
-        style={{ boxShadow: '0 -8px 40px rgba(201, 123, 138, 0.25)' }}
+        style={{ boxShadow: '0 -8px 40px rgba(26, 26, 26, 0.15)' }}
       >
         {/* Handle bar */}
         <div className="w-10 h-1 rounded-full bg-gray-200 mx-auto mb-5" />
 
         <h2
           className="text-2xl font-bold mb-5 text-center"
-          style={{ fontFamily: 'var(--font-playfair)', color: '#4A2535' }}
+          style={{ fontFamily: 'var(--font-playfair)', color: '#1A1A1A' }}
         >
           Nueva Cita
         </h2>
 
         {/* Client name */}
         <div className="mb-4">
-          <label className="block text-sm font-semibold mb-1.5" style={{ color: '#4A2535' }}>
+          <label className="block text-sm font-semibold mb-1.5" style={{ color: '#1A1A1A' }}>
             Nombre de la clienta
           </label>
           <input
@@ -116,16 +116,16 @@ export default function AddAppointmentModal({ onClose, onSaved }: Props) {
             onChange={e => setForm(prev => ({ ...prev, client_name: e.target.value }))}
             className="pn-input w-full rounded-xl border-2 px-4 py-3 text-base transition-all"
             style={{
-              borderColor: '#F0D8D4',
-              backgroundColor: '#FFF7F5',
-              color: '#4A2535',
+              borderColor: '#E5E5E5',
+              backgroundColor: '#FAFAFA',
+              color: '#1A1A1A',
             }}
           />
         </div>
 
         {/* Service selection */}
         <div className="mb-4">
-          <label className="block text-sm font-semibold mb-2" style={{ color: '#4A2535' }}>
+          <label className="block text-sm font-semibold mb-2" style={{ color: '#1A1A1A' }}>
             Servicio
           </label>
           <div className="grid grid-cols-2 gap-3">
@@ -135,13 +135,13 @@ export default function AddAppointmentModal({ onClose, onSaved }: Props) {
               onClick={() => selectService('gel')}
               className="service-btn rounded-2xl border-2 p-4 text-left transition-all"
               style={{
-                borderColor: form.service === 'gel' ? '#C97B8A' : '#F0D8D4',
-                backgroundColor: form.service === 'gel' ? '#FDE8E4' : '#FFF7F5',
+                borderColor: form.service === 'gel' ? '#4A3C31' : '#E5E5E5',
+                backgroundColor: form.service === 'gel' ? '#F5F0E6' : '#FAFAFA',
               }}
             >
               <div className="text-2xl mb-1">💅</div>
-              <div className="font-bold text-sm" style={{ color: '#4A2535' }}>Soft Gel</div>
-              <div className="text-xs font-semibold mt-0.5" style={{ color: '#C97B8A' }}>$13.000</div>
+              <div className="font-bold text-sm" style={{ color: '#1A1A1A' }}>Soft Gel</div>
+              <div className="text-xs font-semibold mt-0.5" style={{ color: form.service === 'gel' ? '#4A3C31' : '#666666' }}>$13.000</div>
             </button>
             <button
               id="btn-service-semi"
@@ -149,13 +149,13 @@ export default function AddAppointmentModal({ onClose, onSaved }: Props) {
               onClick={() => selectService('semi')}
               className="service-btn rounded-2xl border-2 p-4 text-left transition-all"
               style={{
-                borderColor: form.service === 'semi' ? '#7B9EC9' : '#F0D8D4',
-                backgroundColor: form.service === 'semi' ? '#E8F0FB' : '#FFF7F5',
+                borderColor: form.service === 'semi' ? '#2C332D' : '#E5E5E5',
+                backgroundColor: form.service === 'semi' ? '#E8ECEF' : '#FAFAFA',
               }}
             >
               <div className="text-2xl mb-1">✨</div>
-              <div className="font-bold text-sm" style={{ color: '#4A2535' }}>Semi Permanente</div>
-              <div className="text-xs font-semibold mt-0.5" style={{ color: '#7B9EC9' }}>$7.000</div>
+              <div className="font-bold text-sm" style={{ color: '#1A1A1A' }}>Semi Permanente</div>
+              <div className="text-xs font-semibold mt-0.5" style={{ color: form.service === 'semi' ? '#2C332D' : '#666666' }}>$7.000</div>
             </button>
             <button
               id="btn-service-retiro"
@@ -163,13 +163,13 @@ export default function AddAppointmentModal({ onClose, onSaved }: Props) {
               onClick={() => selectService('retiro')}
               className="service-btn rounded-2xl border-2 p-4 text-left transition-all"
               style={{
-                borderColor: form.service === 'retiro' ? '#9B7B85' : '#F0D8D4',
-                backgroundColor: form.service === 'retiro' ? '#F4EBEF' : '#FFF7F5',
+                borderColor: form.service === 'retiro' ? '#666666' : '#E5E5E5',
+                backgroundColor: form.service === 'retiro' ? '#F0F0F0' : '#FAFAFA',
               }}
             >
               <div className="text-2xl mb-1">🧼</div>
-              <div className="font-bold text-sm" style={{ color: '#4A2535' }}>Retiro de uñas</div>
-              <div className="text-xs font-semibold mt-0.5" style={{ color: '#9B7B85' }}>$2.000</div>
+              <div className="font-bold text-sm" style={{ color: '#1A1A1A' }}>Retiro de uñas</div>
+              <div className="text-xs font-semibold mt-0.5" style={{ color: form.service === 'retiro' ? '#666666' : '#666666' }}>$2.000</div>
             </button>
             <button
               id="btn-service-retiro-otras"
@@ -177,21 +177,21 @@ export default function AddAppointmentModal({ onClose, onSaved }: Props) {
               onClick={() => selectService('retiro_otras')}
               className="service-btn rounded-2xl border-2 p-4 text-left transition-all"
               style={{
-                borderColor: form.service === 'retiro_otras' ? '#B88691' : '#F0D8D4',
-                backgroundColor: form.service === 'retiro_otras' ? '#FAEBEF' : '#FFF7F5',
+                borderColor: form.service === 'retiro_otras' ? '#1A1A1A' : '#E5E5E5',
+                backgroundColor: form.service === 'retiro_otras' ? '#E5E5E5' : '#FAFAFA',
               }}
             >
               <div className="text-2xl mb-1">🧴</div>
-              <div className="font-bold text-[13px] leading-tight" style={{ color: '#4A2535' }}>Retiro (Otras)</div>
-              <div className="text-xs font-semibold mt-1" style={{ color: '#B88691' }}>$3.000</div>
+              <div className="font-bold text-[13px] leading-tight" style={{ color: '#1A1A1A' }}>Retiro (Otras)</div>
+              <div className="text-xs font-semibold mt-1" style={{ color: form.service === 'retiro_otras' ? '#1A1A1A' : '#666666' }}>$3.000</div>
             </button>
           </div>
         </div>
 
         {/* Total Price (Editable) */}
         <div className="mb-4">
-          <label className="block text-sm font-semibold mb-1.5" style={{ color: '#4A2535' }}>
-            Precio Total ($) - <span className="font-normal text-xs" style={{ color: '#9B7B85' }}>Modificable por diseño</span>
+          <label className="block text-sm font-semibold mb-1.5" style={{ color: '#1A1A1A' }}>
+            Precio Total ($) - <span className="font-normal text-xs" style={{ color: '#666666' }}>Modificable por diseño</span>
           </label>
           <input
             id="price-input"
@@ -201,16 +201,16 @@ export default function AddAppointmentModal({ onClose, onSaved }: Props) {
             onChange={e => setForm(prev => ({ ...prev, price: parseInt(e.target.value) || 0 }))}
             className="pn-input w-full rounded-xl border-2 px-4 py-3 text-base transition-all"
             style={{
-              borderColor: '#F0D8D4',
-              backgroundColor: '#FFF7F5',
-              color: '#4A2535',
+              borderColor: '#E5E5E5',
+              backgroundColor: '#FAFAFA',
+              color: '#1A1A1A',
             }}
           />
         </div>
 
         {/* Date */}
         <div className="mb-4">
-          <label className="block text-sm font-semibold mb-1.5" style={{ color: '#4A2535' }}>
+          <label className="block text-sm font-semibold mb-1.5" style={{ color: '#1A1A1A' }}>
             Fecha
           </label>
           <input
@@ -220,16 +220,16 @@ export default function AddAppointmentModal({ onClose, onSaved }: Props) {
             onChange={e => setForm(prev => ({ ...prev, date: e.target.value }))}
             className="pn-input w-full rounded-xl border-2 px-4 py-3 text-base transition-all"
             style={{
-              borderColor: '#F0D8D4',
-              backgroundColor: '#FFF7F5',
-              color: '#4A2535',
+              borderColor: '#E5E5E5',
+              backgroundColor: '#FAFAFA',
+              color: '#1A1A1A',
             }}
           />
         </div>
 
         {/* Time */}
         <div className="mb-5">
-          <label className="block text-sm font-semibold mb-1.5" style={{ color: '#4A2535' }}>
+          <label className="block text-sm font-semibold mb-1.5" style={{ color: '#1A1A1A' }}>
             Hora
           </label>
           <input
@@ -239,9 +239,9 @@ export default function AddAppointmentModal({ onClose, onSaved }: Props) {
             onChange={e => setForm(prev => ({ ...prev, time: e.target.value }))}
             className="pn-input w-full rounded-xl border-2 px-4 py-3 text-base transition-all"
             style={{
-              borderColor: '#F0D8D4',
-              backgroundColor: '#FFF7F5',
-              color: '#4A2535',
+              borderColor: '#E5E5E5',
+              backgroundColor: '#FAFAFA',
+              color: '#1A1A1A',
             }}
           />
         </div>
@@ -250,7 +250,7 @@ export default function AddAppointmentModal({ onClose, onSaved }: Props) {
         {error && (
           <div
             className="mb-4 rounded-xl px-4 py-3 text-sm text-center font-medium"
-            style={{ backgroundColor: '#FDEAE8', color: '#C97B8A' }}
+            style={{ backgroundColor: '#F5F5F5', color: '#1A1A1A' }}
           >
             {error}
           </div>
@@ -262,8 +262,8 @@ export default function AddAppointmentModal({ onClose, onSaved }: Props) {
             id="btn-cancel"
             onClick={onClose}
             disabled={loading}
-            className="flex-1 rounded-2xl py-3.5 font-bold text-base transition-all hover:opacity-80"
-            style={{ backgroundColor: '#F0D8D4', color: '#4A2535' }}
+            className="flex-1 rounded-2xl py-3.5 font-bold text-base transition-all hover:opacity-80 border-2"
+            style={{ borderColor: '#E5E5E5', backgroundColor: '#FAFAFA', color: '#1A1A1A' }}
           >
             Cancelar
           </button>
@@ -272,7 +272,7 @@ export default function AddAppointmentModal({ onClose, onSaved }: Props) {
             onClick={handleSave}
             disabled={loading}
             className="flex-1 rounded-2xl py-3.5 font-bold text-base text-white transition-all hover:opacity-90"
-            style={{ backgroundColor: '#C97B8A' }}
+            style={{ backgroundColor: '#1A1A1A' }}
           >
             {loading ? 'Guardando…' : 'Guardar'}
           </button>
