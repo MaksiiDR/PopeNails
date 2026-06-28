@@ -106,8 +106,8 @@ export default function HomePage() {
               <Image
                 src="/logo.png"
                 alt="Pope Nails Logo"
-                width={120}
-                height={45}
+                width={60}
+                height={60}
                 className="object-contain shrink-0"
                 priority
               />
