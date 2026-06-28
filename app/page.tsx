@@ -91,6 +91,8 @@ export default function HomePage() {
   // Most recent past dates first
   const pastDates = sortedDates.filter(d => d < todayStr).reverse()
 
+  const upcomingAppointmentsCount = appointments.filter(apt => apt.date >= todayStr).length
+
   return (
     <div className="min-h-screen" style={{ backgroundColor: '#FAFAFA' }}>
       {/* Header */}
@@ -118,10 +120,10 @@ export default function HomePage() {
               style={{ backgroundColor: '#F5F5F5' }}
             >
               <span className="block text-2xl font-bold" style={{ color: '#1A1A1A' }}>
-                {loading ? '—' : appointments.length}
+                {loading ? '—' : upcomingAppointmentsCount}
               </span>
               <span className="block text-[10px] font-semibold uppercase tracking-wide" style={{ color: '#666666' }}>
-                {appointments.length === 1 ? 'Cita' : 'Citas'}
+                {upcomingAppointmentsCount === 1 ? 'Cita' : 'Citas'}
               </span>
             </div>
           </div>

@@ -168,20 +168,7 @@ export default function PushSubscriptionManager() {
 
   // ── Subscribed confirmation toast ────────────────────────────────────────────
   if (status === 'subscribed') {
-    return (
-      <div
-        className="fixed bottom-24 left-1/2 -translate-x-1/2 w-max z-50 animate-fade-in"
-        style={{ pointerEvents: 'none' }}
-      >
-        <div
-          className="rounded-2xl px-4 py-2.5 flex items-center gap-2 text-sm font-semibold text-white shadow-lg"
-          style={{ backgroundColor: '#1A1A1A' }}
-        >
-          <span>🔔</span>
-          <span>Recordatorios activados</span>
-        </div>
-      </div>
-    )
+    return null
   }
 
   return null
