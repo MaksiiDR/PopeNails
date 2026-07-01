@@ -7,6 +7,14 @@ import AppointmentCard from './components/AppointmentCard'
 import AddAppointmentModal from './components/AddAppointmentModal'
 import SkeletonCard from './components/SkeletonCard'
 
+// Helper to get YYYY-MM-DD in local time
+function getLocalDateString(date: Date = new Date()): string {
+  const year = date.getFullYear()
+  const month = String(date.getMonth() + 1).padStart(2, '0')
+  const day = String(date.getDate()).padStart(2, '0')
+  return `${year}-${month}-${day}`
+}
+
 // Group appointments by date
 function groupByDate(appointments: Appointment[]): Record<string, Appointment[]> {
   return appointments.reduce((acc, apt) => {
@@ -22,8 +30,8 @@ function formatDateHeader(dateStr: string): string {
   const tomorrow = new Date()
   tomorrow.setDate(today.getDate() + 1)
 
-  const todayStr = today.toISOString().split('T')[0]
-  const tomorrowStr = tomorrow.toISOString().split('T')[0]
+  const todayStr = getLocalDateString(today)
+  const tomorrowStr = getLocalDateString(tomorrow)
 
   if (dateStr === todayStr) return 'Hoy'
   if (dateStr === tomorrowStr) return 'Mañana'
@@ -86,7 +94,7 @@ export default function HomePage() {
   const grouped = groupByDate(appointments)
   const sortedDates = Object.keys(grouped).sort()
   
-  const todayStr = new Date().toISOString().split('T')[0]
+  const todayStr = getLocalDateString()
   const upcomingDates = sortedDates.filter(d => d >= todayStr)
   // Most recent past dates first
   const pastDates = sortedDates.filter(d => d < todayStr).reverse()
