@@ -29,8 +29,8 @@ export default function AddAppointmentModal({ onClose, onSaved }: Props) {
 
   const selectService = (service: 'gel' | 'semi' | 'retiro' | 'retiro_otras') => {
     let basePrice = 0;
-    if (service === 'gel') basePrice = 13000;
-    else if (service === 'semi') basePrice = 7000;
+    if (service === 'gel') basePrice = 15000;
+    else if (service === 'semi') basePrice = 10000;
     else if (service === 'retiro') basePrice = 2000;
     else if (service === 'retiro_otras') basePrice = 3000;
 
@@ -141,7 +141,7 @@ export default function AddAppointmentModal({ onClose, onSaved }: Props) {
             >
               <div className="text-2xl mb-1">💅</div>
               <div className="font-bold text-sm" style={{ color: '#1A1A1A' }}>Soft Gel</div>
-              <div className="text-xs font-semibold mt-0.5" style={{ color: form.service === 'gel' ? '#4A3C31' : '#666666' }}>$13.000</div>
+              <div className="text-xs font-semibold mt-0.5" style={{ color: form.service === 'gel' ? '#4A3C31' : '#666666' }}>$15.000</div>
             </button>
             <button
               id="btn-service-semi"
@@ -155,7 +155,7 @@ export default function AddAppointmentModal({ onClose, onSaved }: Props) {
             >
               <div className="text-2xl mb-1">✨</div>
               <div className="font-bold text-sm" style={{ color: '#1A1A1A' }}>Semi Permanente</div>
-              <div className="text-xs font-semibold mt-0.5" style={{ color: form.service === 'semi' ? '#2C332D' : '#666666' }}>$7.000</div>
+              <div className="text-xs font-semibold mt-0.5" style={{ color: form.service === 'semi' ? '#2C332D' : '#666666' }}>$10.000</div>
             </button>
             <button
               id="btn-service-retiro"
