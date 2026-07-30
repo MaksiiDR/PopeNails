@@ -5,6 +5,7 @@ import Image from 'next/image'
 import { supabase, Appointment } from '@/lib/supabase'
 import AppointmentCard from './components/AppointmentCard'
 import AddAppointmentModal from './components/AddAppointmentModal'
+import StatsModal from './components/StatsModal'
 import SkeletonCard from './components/SkeletonCard'
 
 // Helper to get YYYY-MM-DD in local time
@@ -48,6 +49,7 @@ export default function HomePage() {
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
   const [showModal, setShowModal] = useState(false)
+  const [showStats, setShowStats] = useState(false)
   const [showPast, setShowPast] = useState(false)
 
   const fetchAppointments = useCallback(async () => {
@@ -122,17 +124,32 @@ export default function HomePage() {
                 priority
               />
             </div>
-            {/* Appointment counter */}
-            <div
-              className="mt-1 px-4 py-2 rounded-2xl text-center"
-              style={{ backgroundColor: '#F5F5F5' }}
-            >
-              <span className="block text-2xl font-bold" style={{ color: '#1A1A1A' }}>
-                {loading ? '—' : upcomingAppointmentsCount}
-              </span>
-              <span className="block text-[10px] font-semibold uppercase tracking-wide" style={{ color: '#666666' }}>
-                {upcomingAppointmentsCount === 1 ? 'Cita' : 'Citas'}
-              </span>
+            {/* Appointment counter & Stats button */}
+            <div className="flex items-center gap-2">
+              <div
+                className="px-4 py-2 rounded-2xl text-center"
+                style={{ backgroundColor: '#F5F5F5' }}
+              >
+                <span className="block text-2xl font-bold" style={{ color: '#1A1A1A' }}>
+                  {loading ? '—' : upcomingAppointmentsCount}
+                </span>
+                <span className="block text-[10px] font-semibold uppercase tracking-wide" style={{ color: '#666666' }}>
+                  {upcomingAppointmentsCount === 1 ? 'Cita' : 'Citas'}
+                </span>
+              </div>
+              <button
+                id="btn-open-stats"
+                onClick={() => setShowStats(true)}
+                className="p-3 rounded-2xl flex flex-col items-center justify-center transition-all hover:bg-gray-200 active:scale-95"
+                style={{ backgroundColor: '#F5F5F5', color: '#1A1A1A' }}
+                aria-label="Ver estadísticas"
+                title="Estadísticas"
+              >
+                <span className="text-xl leading-none">📊</span>
+                <span className="text-[9px] font-semibold uppercase tracking-wide mt-1" style={{ color: '#666666' }}>
+                  Stats
+                </span>
+              </button>
             </div>
           </div>
         </div>
@@ -290,6 +307,14 @@ export default function HomePage() {
         <AddAppointmentModal
           onClose={() => setShowModal(false)}
           onSaved={handleSaved}
+        />
+      )}
+
+      {/* Stats Modal */}
+      {showStats && (
+        <StatsModal
+          appointments={appointments}
+          onClose={() => setShowStats(false)}
         />
       )}
     </div>
