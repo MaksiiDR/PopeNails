@@ -28,8 +28,8 @@ export async function POST() {
   const payload = JSON.stringify({
     title: '🔔 Prueba Pope Nails',
     body: 'Las notificaciones funcionan correctamente 💅',
-    icon: '/icon-192.png',
-    badge: '/icon-192.png',
+    icon: '/icon-192.jpg',
+    badge: '/icon-192.jpg',
     url: '/',
   })
 

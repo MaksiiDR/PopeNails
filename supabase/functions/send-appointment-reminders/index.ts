@@ -14,7 +14,7 @@ import webpush from 'npm:web-push@3'
 interface Appointment {
   id: string
   client_name: string
-  service: 'gel' | 'semi'
+  service: 'gel' | 'semi' | 'retiro' | 'retiro_otras'
   price: number
   date: string   // YYYY-MM-DD
   time: string   // HH:MM:SS
@@ -115,15 +115,21 @@ Deno.serve(async (_req) => {
   const results = []
 
   for (const appointment of appointments as Appointment[]) {
-    const serviceLabel = appointment.service === 'gel' ? 'Soft Gel' : 'Semi Permanente'
+    const serviceLabels: Record<Appointment['service'], string> = {
+      gel: 'Soft Gel',
+      semi: 'Semi Permanente',
+      retiro: 'Retiro de uñas',
+      retiro_otras: 'Retiro (Otras)',
+    }
+    const serviceLabel = serviceLabels[appointment.service] ?? appointment.service
     const timeStr = formatTime12h(appointment.time)
     const dateStr = formatDateEs(appointment.date)
 
     const notificationPayload = JSON.stringify({
       title: 'Recordatorio de cita 💅',
       body: `${appointment.client_name} tiene una cita de ${serviceLabel} mañana (${dateStr}) a las ${timeStr}.`,
-      icon: '/icon-192.png',
-      badge: '/icon-192.png',
+      icon: '/icon-192.jpg',
+      badge: '/icon-192.jpg',
       url: '/',
     })
 
@@ -163,11 +169,13 @@ Deno.serve(async (_req) => {
       await supabase.from('push_subscriptions').delete().in('endpoint', staleEndpoints)
     }
 
-    // Mark appointment as notified
-    await supabase
-      .from('appointments')
-      .update({ notificacion_enviada: true })
-      .eq('id', appointment.id)
+    // Only mark as notified if at least one device received the push
+    if (sent > 0) {
+      await supabase
+        .from('appointments')
+        .update({ notificacion_enviada: true })
+        .eq('id', appointment.id)
+    }
 
     results.push({ appointment_id: appointment.id, client: appointment.client_name, sent })
   }

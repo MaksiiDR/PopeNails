@@ -9,6 +9,9 @@ import {
 
 type Status = 'idle' | 'unsupported' | 'denied' | 'subscribed' | 'unsubscribed' | 'loading'
 
+const IOS_GUIDE_KEY = 'pn-ios-guide-dismissed'
+const PUSH_DISMISS_KEY = 'pn-push-dismissed'
+
 /** Detect if running as installed PWA (standalone mode) */
 function isStandalone(): boolean {
   if (typeof window === 'undefined') return false
@@ -32,9 +35,11 @@ export default function PushSubscriptionManager() {
   useEffect(() => {
     if (typeof window === 'undefined') return
 
-    // iOS but NOT in standalone mode → show "add to home screen" guide
+    // iOS but NOT in standalone mode → show "add to home screen" guide once
     if (isIOS() && !isStandalone()) {
-      setShowIOSGuide(true)
+      if (!localStorage.getItem(IOS_GUIDE_KEY)) {
+        setShowIOSGuide(true)
+      }
       return
     }
 
@@ -52,7 +57,7 @@ export default function PushSubscriptionManager() {
         subscribeToPush().then(() => setStatus('subscribed'))
       } else if (perm === 'denied') {
         setStatus('denied')
-      } else {
+      } else if (!localStorage.getItem(PUSH_DISMISS_KEY)) {
         // Not yet decided — show the prompt banner after a short delay
         setTimeout(() => setVisible(true), 2000)
       }
@@ -77,8 +82,14 @@ export default function PushSubscriptionManager() {
   }
 
   const handleDismiss = () => {
+    localStorage.setItem(PUSH_DISMISS_KEY, '1')
     setVisible(false)
     setStatus('unsubscribed')
+  }
+
+  const handleDismissIOSGuide = () => {
+    localStorage.setItem(IOS_GUIDE_KEY, '1')
+    setShowIOSGuide(false)
   }
 
   // ── iOS guide: must open from home screen icon ───────────────────────────────
@@ -107,7 +118,7 @@ export default function PushSubscriptionManager() {
               ¿No lo agregaste aún? Tocá el botón <strong>Compartir 〔⬆︎〕</strong> y luego <strong>«Agregar a pantalla de inicio»</strong>.
             </p>
             <button
-              onClick={() => setShowIOSGuide(false)}
+              onClick={handleDismissIOSGuide}
               className="mt-3 w-full rounded-xl py-2 text-xs font-bold transition-all border-2"
               style={{ backgroundColor: '#FAFAFA', borderColor: '#E5E5E5', color: '#1A1A1A' }}
             >

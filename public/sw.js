@@ -1,8 +1,8 @@
 // Pope Nails — Service Worker
 // Handles push notifications and offline caching
 
-const CACHE_NAME = 'pope-nails-v1';
-const OFFLINE_URLS = ['/', '/icon-192.png', '/icon-512.png'];
+const CACHE_NAME = 'pope-nails-v2';
+const OFFLINE_URLS = ['/', '/icon-192.jpg', '/icon-512.jpg'];
 
 // ─── Install: pre-cache shell ────────────────────────────────────────────────
 self.addEventListener('install', (event) => {
@@ -32,7 +32,9 @@ self.addEventListener('fetch', (event) => {
         caches.open(CACHE_NAME).then((cache) => cache.put(event.request, clone));
         return res;
       })
-      .catch(() => caches.match(event.request))
+      .catch(() =>
+        caches.match(event.request).then((cached) => cached || caches.match('/'))
+      )
   );
 });
 
@@ -41,7 +43,7 @@ self.addEventListener('push', (event) => {
   let payload = {
     title: 'Recordatorio de cita 💅',
     body: 'Tienes una cita pendiente.',
-    icon: '/icon-192.png',
+    icon: '/icon-192.jpg',
     url: '/',
   };
 
