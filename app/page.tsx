@@ -137,6 +137,18 @@ export default function HomePage() {
                   {upcomingAppointmentsCount === 1 ? 'Cita' : 'Citas'}
                 </span>
               </div>
+              <a
+                href="/plantilla"
+                className="p-3 rounded-2xl flex flex-col items-center justify-center transition-all hover:bg-gray-200 active:scale-95"
+                style={{ backgroundColor: '#F5F5F5', color: '#1A1A1A' }}
+                aria-label="Plantilla de posts"
+                title="Plantilla de posts"
+              >
+                <span className="text-xl leading-none">🖼️</span>
+                <span className="text-[9px] font-semibold uppercase tracking-wide mt-1" style={{ color: '#666666' }}>
+                  Posts
+                </span>
+              </a>
               <button
                 id="btn-open-stats"
                 onClick={() => setShowStats(true)}
