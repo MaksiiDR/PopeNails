@@ -7,7 +7,6 @@ import { supabase, Appointment } from '@/lib/supabase'
 import AppointmentCard from './components/AppointmentCard'
 import AddAppointmentModal from './components/AddAppointmentModal'
 import SkeletonCard from './components/SkeletonCard'
-import { splitTime } from '@/lib/services'
 
 // Helper to get YYYY-MM-DD in local time
 function getLocalDateString(date: Date = new Date()): string {
@@ -102,7 +101,6 @@ export default function HomePage() {
   const pastDates = sortedDates.filter(d => d < todayStr).reverse()
 
   const upcomingAppointmentsCount = appointments.filter(apt => apt.date >= todayStr).length
-  const nextAppointment = upcomingDates.length > 0 ? grouped[upcomingDates[0]][0] : null
   const todayLabel = new Date().toLocaleDateString('es-CL', { weekday: 'long', day: 'numeric', month: 'long' })
 
   return (
@@ -110,7 +108,7 @@ export default function HomePage() {
       {/* Encabezado nocturno con el logo */}
       <header className="pn-night" style={{ paddingTop: 'env(safe-area-inset-top, 0px)' }}>
         <div className="pn-stars">
-          <div className="max-w-[430px] mx-auto px-5 pt-5 pb-6">
+          <div className="max-w-[430px] mx-auto px-5 pt-5 pb-5">
             <div className="flex items-center justify-between">
               <Image
                 src="/plantilla-logo.png"
@@ -145,7 +143,7 @@ export default function HomePage() {
               </nav>
             </div>
 
-            <div className="flex items-center justify-between gap-4 mt-6">
+            <div className="flex items-center justify-between gap-4 mt-4">
               <h1 className="pn-label text-pn-goldsoft">{todayLabel}</h1>
               <p className="shrink-0 text-[13px] text-white/70">
                 <strong className="font-display text-[22px] font-semibold text-[#f3ece0] [font-variant-numeric:lining-nums] mr-1">
@@ -155,22 +153,6 @@ export default function HomePage() {
               </p>
             </div>
 
-            {/* Próxima cita */}
-            {!loading && nextAppointment && (
-              <div className="mt-5 flex items-center gap-3 rounded-2xl bg-white/[0.07] border border-white/10 px-4 py-3">
-                <span className="w-2 h-2 rounded-full shrink-0 bg-pn-goldsoft" aria-hidden="true" />
-                <p className="text-[13px] text-white/70 min-w-0 truncate">
-                  <span className="text-white/50">Próxima · </span>
-                  <span className="capitalize">{formatDateHeader(nextAppointment.date)}</span>
-                  {' · '}
-                  <strong className="text-[#f3ece0]">
-                    {splitTime(nextAppointment.time).clock} {splitTime(nextAppointment.time).period}
-                  </strong>
-                  {' · '}
-                  <span className="text-[#f3ece0]">{nextAppointment.client_name}</span>
-                </p>
-              </div>
-            )}
           </div>
         </div>
       </header>
