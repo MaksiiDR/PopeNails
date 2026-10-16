@@ -9,18 +9,24 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
+        // Noche estrellada del logo + papel marfil
         pn: {
-          bg: "#FFF7F5",
-          primary: "#C97B8A",
-          accent: "#E8A0A8",
-          dark: "#4A2535",
-          border: "#F0D8D4",
-          muted: "#9B7B85",
+          ink: "#100e13",      // banda superior, botones principales
+          night: "#1c1822",    // superficies oscuras secundarias
+          ivory: "#f5f0e7",    // fondo de la app
+          paper: "#fffdf9",    // tarjetas
+          line: "#e7dfd1",     // bordes y separadores
+          muted: "#857b70",    // texto secundario
+          text: "#1d1a20",     // texto principal
+          gold: "#a8844b",     // acento sobre claro
+          goldsoft: "#d8b878", // acento sobre oscuro
+          plum: "#6b3157",     // semipermanente
         },
       },
       fontFamily: {
-        playfair: ["var(--font-playfair)", "serif"],
-        nunito: ["var(--font-nunito)", "sans-serif"],
+        display: ["var(--font-display)", "Georgia", "serif"],
+        label: ["var(--font-label)", "Georgia", "serif"],
+        ui: ["var(--font-ui)", "system-ui", "sans-serif"],
       },
     },
   },

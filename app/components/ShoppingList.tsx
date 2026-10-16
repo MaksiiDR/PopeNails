@@ -62,80 +62,70 @@ export default function ShoppingList() {
 
   if (loading && items.length === 0) {
     return (
-      <div className="animate-pulse bg-white rounded-2xl p-4 border shadow-sm h-32 flex items-center justify-center" style={{ borderColor: '#E5E5E5' }}>
-        <div className="text-sm font-medium" style={{ color: '#666666' }}>Cargando lista de compras...</div>
+      <div className="space-y-2.5">
+        {[1, 2, 3].map(i => (
+          <div key={i} className="skeleton h-12" />
+        ))}
       </div>
     )
   }
 
   return (
-    <div 
-      className="bg-white rounded-2xl p-5 border shadow-sm"
-      style={{ borderColor: '#E5E5E5' }}
-    >
-      <div className="flex items-center gap-3 mb-4">
-        <span className="text-xl">🛍️</span>
-        <h2
-          className="text-lg font-bold"
-          style={{ fontFamily: 'var(--font-playfair)', color: '#1A1A1A' }}
-        >
-          Lista de Compras
-        </h2>
-      </div>
-
-      {/* Add form */}
-      <form onSubmit={handleAddItem} className="flex gap-2 mb-4">
+    <div className="space-y-5">
+      {/* Agregar */}
+      <form onSubmit={handleAddItem} className="flex gap-2">
+        <label htmlFor="new-item" className="sr-only">
+          Nuevo artículo
+        </label>
         <input
+          id="new-item"
           type="text"
-          placeholder="Ej: Removedor de cutícula..."
+          placeholder="Ej: Removedor de cutícula"
           value={newItemName}
           onChange={e => setNewItemName(e.target.value)}
-          className="flex-1 rounded-xl px-4 py-2.5 text-sm transition-all focus:outline-none"
-          style={{ 
-            backgroundColor: '#FAFAFA',
-            border: '1.5px solid #E5E5E5',
-            color: '#1A1A1A'
-          }}
+          className="pn-input flex-1 min-w-0"
+          autoComplete="off"
         />
         <button
           type="submit"
-          className="rounded-xl px-4 py-2.5 font-bold text-sm text-white transition-opacity hover:opacity-80 disabled:opacity-50"
-          style={{ backgroundColor: '#1A1A1A' }}
+          className="shrink-0 rounded-full px-5 font-bold text-[15px] bg-pn-ink text-[#f3ece0] transition-opacity hover:opacity-90 disabled:opacity-40"
           disabled={!newItemName.trim() || loading}
         >
           Añadir
         </button>
       </form>
 
-      {/* Items List */}
-      <div className="space-y-2">
+      {/* Lista */}
+      <section>
+        <div className="flex items-center gap-3 mb-3 px-1">
+          <h2 className="pn-label text-pn-gold">Por comprar</h2>
+          <span className="flex-1 h-px bg-pn-line" aria-hidden="true" />
+          <span className="text-[11px] font-bold text-pn-muted">{items.length}</span>
+        </div>
+
         {items.length === 0 ? (
-          <p className="text-sm text-center py-2" style={{ color: '#666666' }}>
-            No tienes artículos en tu lista.
-          </p>
+          <div className="rounded-2xl border border-dashed border-pn-line px-5 py-8 text-center">
+            <p className="font-display text-[22px] font-medium">Todo comprado</p>
+            <p className="text-sm text-pn-muted mt-1">Anota aquí lo que se te vaya acabando.</p>
+          </div>
         ) : (
-          items.map(item => (
-            <div 
-              key={item.id}
-              className="flex items-center justify-between group rounded-xl px-3 py-2 transition-colors hover:bg-gray-50"
-              style={{ backgroundColor: '#FAFAFA', border: '1px solid #F0F0F0' }}
-            >
-              <span className="text-sm font-medium" style={{ color: '#1A1A1A' }}>
-                {item.name}
-              </span>
-              <button
-                onClick={() => handleDeleteItem(item.id)}
-                className="w-7 h-7 flex items-center justify-center rounded-full text-xs font-bold transition-all hover:bg-gray-200 opacity-50 group-hover:opacity-100"
-                style={{ color: '#1A1A1A' }}
-                aria-label="Eliminar"
-                title="Eliminar artículo"
-              >
-                ✕
-              </button>
-            </div>
-          ))
+          <ul className="rounded-2xl border border-pn-line bg-pn-paper divide-y divide-pn-line overflow-hidden">
+            {items.map(item => (
+              <li key={item.id} className="flex items-center gap-3 pl-4 pr-2 py-2.5">
+                <span className="w-1.5 h-1.5 rounded-full bg-pn-gold shrink-0" aria-hidden="true" />
+                <span className="flex-1 min-w-0 text-[15px] font-semibold break-words">{item.name}</span>
+                <button
+                  onClick={() => handleDeleteItem(item.id)}
+                  className="shrink-0 rounded-full px-3 py-1.5 text-xs font-bold text-pn-muted border border-pn-line transition-colors hover:bg-pn-ivory active:scale-95"
+                  aria-label={`Marcar ${item.name} como comprado`}
+                >
+                  Listo
+                </button>
+              </li>
+            ))}
+          </ul>
         )}
-      </div>
+      </section>
     </div>
   )
 }

@@ -3,13 +3,14 @@
 @tailwind utilities;
 
 :root {
-  --color-bg: #FAFAFA;
-  --color-primary: #1A1A1A;
-  --color-accent: #333333;
-  --color-dark: #1A1A1A;
-  --color-card-border: #E5E5E5;
-  --font-playfair: var(--font-playfair);
-  --font-nunito: var(--font-nunito);
+  --pn-ink: #100e13;
+  --pn-ivory: #f5f0e7;
+  --pn-paper: #fffdf9;
+  --pn-line: #e7dfd1;
+  --pn-muted: #857b70;
+  --pn-text: #1d1a20;
+  --pn-gold: #a8844b;
+  --pn-goldsoft: #d8b878;
 }
 
 * {
@@ -18,96 +19,112 @@
 
 html,
 body {
-  background-color: var(--color-bg);
-  color: var(--color-dark);
+  background-color: var(--pn-ivory);
+  color: var(--pn-text);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  -webkit-tap-highlight-color: transparent;
 }
 
-/* Scrollbar styling */
 ::-webkit-scrollbar {
   width: 6px;
 }
 ::-webkit-scrollbar-track {
-  background: #FAFAFA;
+  background: var(--pn-ivory);
 }
 ::-webkit-scrollbar-thumb {
-  background: #1A1A1A;
+  background: #cfc4b2;
   border-radius: 3px;
 }
 
-/* Modal slide-up animation */
-@keyframes slideUp {
-  from {
-    transform: translateY(100%);
-    opacity: 0;
-  }
-  to {
-    transform: translateY(0);
-    opacity: 1;
-  }
+/* Banda nocturna de los encabezados */
+.pn-night {
+  background-color: var(--pn-ink);
+  background-image:
+    radial-gradient(120% 140% at 85% -20%, rgba(107, 49, 87, 0.45) 0%, rgba(16, 14, 19, 0) 55%),
+    radial-gradient(90% 120% at 10% 0%, rgba(168, 132, 75, 0.18) 0%, rgba(16, 14, 19, 0) 60%);
+  color: #f3ece0;
 }
 
+/* Puntitos de estrellas, muy sutiles */
+.pn-stars {
+  background-image:
+    radial-gradient(1.2px 1.2px at 12% 30%, rgba(243, 236, 224, 0.7) 50%, transparent 51%),
+    radial-gradient(1px 1px at 28% 68%, rgba(243, 236, 224, 0.5) 50%, transparent 51%),
+    radial-gradient(1.4px 1.4px at 46% 22%, rgba(243, 236, 224, 0.6) 50%, transparent 51%),
+    radial-gradient(1px 1px at 63% 58%, rgba(243, 236, 224, 0.45) 50%, transparent 51%),
+    radial-gradient(1.2px 1.2px at 78% 34%, rgba(243, 236, 224, 0.65) 50%, transparent 51%),
+    radial-gradient(1px 1px at 91% 72%, rgba(243, 236, 224, 0.5) 50%, transparent 51%);
+}
+
+/* Etiqueta en versalitas con filete dorado */
+.pn-label {
+  font-family: var(--font-label), Georgia, serif;
+  text-transform: uppercase;
+  letter-spacing: 0.22em;
+  font-size: 11px;
+}
+
+/* Animaciones */
+@keyframes slideUp {
+  from { transform: translateY(100%); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
 @keyframes fadeIn {
   from { opacity: 0; }
   to { opacity: 1; }
 }
-
 @keyframes shimmer {
   0% { background-position: -200% 0; }
   100% { background-position: 200% 0; }
 }
 
 .animate-slide-up {
-  animation: slideUp 0.35s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+  animation: slideUp 0.35s cubic-bezier(0.22, 1, 0.36, 1) forwards;
 }
-
 .animate-fade-in {
   animation: fadeIn 0.2s ease forwards;
 }
 
 .skeleton {
-  background: linear-gradient(90deg, #E5E5E5 25%, #F5F5F5 50%, #E5E5E5 75%);
+  background: linear-gradient(90deg, #ece5d9 25%, #f7f2ea 50%, #ece5d9 75%);
   background-size: 200% 100%;
   animation: shimmer 1.5s infinite;
-  border-radius: 12px;
+  border-radius: 10px;
 }
 
-/* Service button active state */
 .service-btn {
-  transition: all 0.2s ease;
+  transition: border-color 0.15s ease, background-color 0.15s ease, transform 0.15s ease;
 }
 .service-btn:active {
   transform: scale(0.97);
 }
 
-/* Floating button pulse */
-@keyframes pulse-soft {
-  0%, 100% { box-shadow: 0 4px 24px rgba(26, 26, 26, 0.25); }
-  50% { box-shadow: 0 4px 32px rgba(26, 26, 26, 0.4); }
-}
-
-.fab-btn {
-  animation: pulse-soft 2.5s ease-in-out infinite;
-}
-
-/* Card hover */
 .appointment-card {
   transition: transform 0.18s ease, box-shadow 0.18s ease;
 }
-.appointment-card:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 8px 24px rgba(26, 26, 26, 0.08);
-}
 
-/* Input focus ring */
+/* Campos de formulario */
+.pn-input {
+  width: 100%;
+  border-radius: 14px;
+  border: 1.5px solid var(--pn-line);
+  background: #fff;
+  color: var(--pn-text);
+  padding: 12px 14px;
+  font-size: 16px; /* evita el zoom automático en iPhone */
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+.pn-input::placeholder {
+  color: #b4aa9d;
+}
 .pn-input:focus {
   outline: none;
-  border-color: var(--color-primary);
-  box-shadow: 0 0 0 3px rgba(26, 26, 26, 0.1);
+  border-color: var(--pn-gold);
+  box-shadow: 0 0 0 3px rgba(168, 132, 75, 0.15);
 }
 
-/* Smooth accordion grid transition */
+/* Acordeón */
 .grid-accordion {
   display: grid;
   grid-template-rows: 0fr;
@@ -118,4 +135,11 @@ body {
 }
 .grid-accordion-inner {
   overflow: hidden;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
 }

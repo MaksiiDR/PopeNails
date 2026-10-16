@@ -2,10 +2,11 @@
 
 import { useState } from 'react'
 import { supabase } from '@/lib/supabase'
+import { SERVICES, SERVICE_ORDER, ServiceKey, formatPrice } from '@/lib/services'
 
 type NewAppointment = {
   client_name: string
-  service: 'gel' | 'semi' | 'retiro' | 'retiro_otras' | null
+  service: ServiceKey | null
   price: number
   date: string
   time: string
@@ -27,35 +28,25 @@ export default function AddAppointmentModal({ onClose, onSaved }: Props) {
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
 
-  const selectService = (service: 'gel' | 'semi' | 'retiro' | 'retiro_otras') => {
-    let basePrice = 0;
-    if (service === 'gel') basePrice = 15000;
-    else if (service === 'semi') basePrice = 10000;
-    else if (service === 'retiro') basePrice = 2000;
-    else if (service === 'retiro_otras') basePrice = 3000;
-
-    setForm(prev => ({
-      ...prev,
-      service,
-      price: basePrice,
-    }))
+  const selectService = (service: ServiceKey) => {
+    setForm(prev => ({ ...prev, service, price: SERVICES[service].price }))
   }
 
   const handleSave = async () => {
     if (!form.client_name.trim()) {
-      setError('Por favor ingresa el nombre de la clienta.')
+      setError('Escribe el nombre de la clienta.')
       return
     }
     if (!form.service) {
-      setError('Por favor selecciona un servicio.')
+      setError('Elige un servicio.')
       return
     }
     if (!form.date) {
-      setError('Por favor selecciona una fecha.')
+      setError('Elige la fecha de la cita.')
       return
     }
     if (!form.time) {
-      setError('Por favor selecciona una hora.')
+      setError('Elige la hora de la cita.')
       return
     }
 
@@ -75,7 +66,7 @@ export default function AddAppointmentModal({ onClose, onSaved }: Props) {
     setLoading(false)
 
     if (dbError) {
-      setError('Error al guardar la cita. Por favor intenta de nuevo.')
+      setError('No se pudo guardar la cita. Revisa tu conexión e intenta de nuevo.')
       console.error(dbError)
       return
     }
@@ -83,199 +74,147 @@ export default function AddAppointmentModal({ onClose, onSaved }: Props) {
     onSaved()
   }
 
+  const fieldLabel = 'block text-[13px] font-bold mb-1.5'
+
   return (
     <div
-      className="fixed inset-0 z-50 flex items-end justify-center animate-fade-in"
-      style={{ backgroundColor: 'rgba(26, 26, 26, 0.45)' }}
-      onClick={(e) => { if (e.target === e.currentTarget) onClose() }}
+      className="fixed inset-0 z-50 flex items-end justify-center animate-fade-in bg-pn-ink/55"
+      onClick={e => {
+        if (e.target === e.currentTarget) onClose()
+      }}
     >
       <div
-        className="w-full max-w-[430px] bg-white rounded-t-3xl p-6 pb-10 animate-slide-up"
-        style={{ boxShadow: '0 -8px 40px rgba(26, 26, 26, 0.15)' }}
+        className="w-full max-w-[430px] max-h-[92vh] overflow-y-auto bg-pn-ivory rounded-t-[28px] px-5 pt-3 animate-slide-up"
+        style={{ paddingBottom: 'calc(env(safe-area-inset-bottom, 0px) + 24px)' }}
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="new-appointment-title"
       >
-        {/* Handle bar */}
-        <div className="w-10 h-1 rounded-full bg-gray-200 mx-auto mb-5" />
+        <div className="w-10 h-1 rounded-full bg-pn-line mx-auto mb-4" />
 
-        <h2
-          className="text-2xl font-bold mb-5 text-center"
-          style={{ fontFamily: 'var(--font-playfair)', color: '#1A1A1A' }}
-        >
-          Nueva Cita
+        <p className="pn-label text-pn-gold text-center">Agenda</p>
+        <h2 id="new-appointment-title" className="font-display text-[32px] leading-none font-medium text-center mt-1 mb-6">
+          Nueva cita
         </h2>
 
-        {/* Client name */}
-        <div className="mb-4">
-          <label className="block text-sm font-semibold mb-1.5" style={{ color: '#1A1A1A' }}>
-            Nombre de la clienta
-          </label>
-          <input
-            id="client-name-input"
-            type="text"
-            placeholder="Ej: María González"
-            value={form.client_name}
-            onChange={e => setForm(prev => ({ ...prev, client_name: e.target.value }))}
-            className="pn-input w-full rounded-xl border-2 px-4 py-3 text-base transition-all"
-            style={{
-              borderColor: '#E5E5E5',
-              backgroundColor: '#FAFAFA',
-              color: '#1A1A1A',
-            }}
-          />
-        </div>
+        <div className="space-y-5">
+          <div>
+            <label htmlFor="client-name-input" className={fieldLabel}>
+              Nombre de la clienta
+            </label>
+            <input
+              id="client-name-input"
+              type="text"
+              placeholder="Ej: María González"
+              value={form.client_name}
+              onChange={e => setForm(prev => ({ ...prev, client_name: e.target.value }))}
+              className="pn-input"
+              autoComplete="off"
+            />
+          </div>
 
-        {/* Service selection */}
-        <div className="mb-4">
-          <label className="block text-sm font-semibold mb-2" style={{ color: '#1A1A1A' }}>
-            Servicio
-          </label>
-          <div className="grid grid-cols-2 gap-3">
+          <div>
+            <span className={fieldLabel}>Servicio</span>
+            <div className="grid grid-cols-2 gap-2.5">
+              {SERVICE_ORDER.map(key => {
+                const svc = SERVICES[key]
+                const active = form.service === key
+                return (
+                  <button
+                    key={key}
+                    id={`btn-service-${key.replace('_', '-')}`}
+                    type="button"
+                    onClick={() => selectService(key)}
+                    aria-pressed={active}
+                    className="service-btn rounded-2xl border-[1.5px] p-3.5 text-left"
+                    style={{
+                      borderColor: active ? svc.color : 'var(--pn-line)',
+                      backgroundColor: active ? svc.tint : '#fff',
+                    }}
+                  >
+                    <span className="flex items-center gap-2">
+                      <span className="w-2.5 h-2.5 rounded-full" style={{ backgroundColor: svc.color }} aria-hidden="true" />
+                      <span className="font-bold text-[14px] leading-tight">{svc.label}</span>
+                    </span>
+                    <span className="block text-xs font-semibold mt-1.5 tabular-nums" style={{ color: active ? svc.color : 'var(--pn-muted)' }}>
+                      {formatPrice(svc.price)}
+                    </span>
+                  </button>
+                )
+              })}
+            </div>
+          </div>
+
+          <div>
+            <label htmlFor="price-input" className={fieldLabel}>
+              Precio total <span className="font-semibold text-pn-muted">· puedes cambiarlo según el diseño</span>
+            </label>
+            <div className="relative">
+              <span className="absolute left-3.5 top-1/2 -translate-y-1/2 font-bold text-pn-muted">$</span>
+              <input
+                id="price-input"
+                type="number"
+                inputMode="numeric"
+                placeholder="15000"
+                value={form.price || ''}
+                onChange={e => setForm(prev => ({ ...prev, price: parseInt(e.target.value) || 0 }))}
+                className="pn-input tabular-nums"
+                style={{ paddingLeft: 28 }}
+              />
+            </div>
+          </div>
+
+          <div className="grid grid-cols-2 gap-2.5">
+            <div className="min-w-0">
+              <label htmlFor="date-input" className={fieldLabel}>
+                Fecha
+              </label>
+              <input
+                id="date-input"
+                type="date"
+                value={form.date}
+                onChange={e => setForm(prev => ({ ...prev, date: e.target.value }))}
+                className="pn-input"
+              />
+            </div>
+            <div className="min-w-0">
+              <label htmlFor="time-input" className={fieldLabel}>
+                Hora
+              </label>
+              <input
+                id="time-input"
+                type="time"
+                value={form.time}
+                onChange={e => setForm(prev => ({ ...prev, time: e.target.value }))}
+                className="pn-input"
+              />
+            </div>
+          </div>
+
+          {error && (
+            <p className="rounded-xl bg-[#f6e3e3] text-[#8a2f2f] px-4 py-3 text-sm font-semibold text-center" role="alert">
+              {error}
+            </p>
+          )}
+
+          <div className="flex gap-2.5 pt-1">
             <button
-              id="btn-service-gel"
-              type="button"
-              onClick={() => selectService('gel')}
-              className="service-btn rounded-2xl border-2 p-4 text-left transition-all"
-              style={{
-                borderColor: form.service === 'gel' ? '#4A3C31' : '#E5E5E5',
-                backgroundColor: form.service === 'gel' ? '#F5F0E6' : '#FAFAFA',
-              }}
+              id="btn-cancel"
+              onClick={onClose}
+              disabled={loading}
+              className="flex-1 rounded-full py-3.5 font-bold text-[15px] border-[1.5px] border-pn-line bg-white transition-opacity hover:opacity-80"
             >
-              <div className="text-2xl mb-1">💅</div>
-              <div className="font-bold text-sm" style={{ color: '#1A1A1A' }}>Soft Gel</div>
-              <div className="text-xs font-semibold mt-0.5" style={{ color: form.service === 'gel' ? '#4A3C31' : '#666666' }}>$15.000</div>
+              Cancelar
             </button>
             <button
-              id="btn-service-semi"
-              type="button"
-              onClick={() => selectService('semi')}
-              className="service-btn rounded-2xl border-2 p-4 text-left transition-all"
-              style={{
-                borderColor: form.service === 'semi' ? '#2C332D' : '#E5E5E5',
-                backgroundColor: form.service === 'semi' ? '#E8ECEF' : '#FAFAFA',
-              }}
+              id="btn-save"
+              onClick={handleSave}
+              disabled={loading}
+              className="flex-[1.4] rounded-full py-3.5 font-bold text-[15px] bg-pn-ink text-[#f3ece0] transition-opacity hover:opacity-90 disabled:opacity-60"
             >
-              <div className="text-2xl mb-1">✨</div>
-              <div className="font-bold text-sm" style={{ color: '#1A1A1A' }}>Semi Permanente</div>
-              <div className="text-xs font-semibold mt-0.5" style={{ color: form.service === 'semi' ? '#2C332D' : '#666666' }}>$10.000</div>
-            </button>
-            <button
-              id="btn-service-retiro"
-              type="button"
-              onClick={() => selectService('retiro')}
-              className="service-btn rounded-2xl border-2 p-4 text-left transition-all"
-              style={{
-                borderColor: form.service === 'retiro' ? '#666666' : '#E5E5E5',
-                backgroundColor: form.service === 'retiro' ? '#F0F0F0' : '#FAFAFA',
-              }}
-            >
-              <div className="text-2xl mb-1">🧼</div>
-              <div className="font-bold text-sm" style={{ color: '#1A1A1A' }}>Retiro de uñas</div>
-              <div className="text-xs font-semibold mt-0.5" style={{ color: form.service === 'retiro' ? '#666666' : '#666666' }}>$2.000</div>
-            </button>
-            <button
-              id="btn-service-retiro-otras"
-              type="button"
-              onClick={() => selectService('retiro_otras')}
-              className="service-btn rounded-2xl border-2 p-4 text-left transition-all"
-              style={{
-                borderColor: form.service === 'retiro_otras' ? '#1A1A1A' : '#E5E5E5',
-                backgroundColor: form.service === 'retiro_otras' ? '#E5E5E5' : '#FAFAFA',
-              }}
-            >
-              <div className="text-2xl mb-1">🧴</div>
-              <div className="font-bold text-[13px] leading-tight" style={{ color: '#1A1A1A' }}>Retiro (Otras)</div>
-              <div className="text-xs font-semibold mt-1" style={{ color: form.service === 'retiro_otras' ? '#1A1A1A' : '#666666' }}>$3.000</div>
+              {loading ? 'Guardando…' : 'Guardar cita'}
             </button>
           </div>
-        </div>
-
-        {/* Total Price (Editable) */}
-        <div className="mb-4">
-          <label className="block text-sm font-semibold mb-1.5" style={{ color: '#1A1A1A' }}>
-            Precio Total ($) - <span className="font-normal text-xs" style={{ color: '#666666' }}>Modificable por diseño</span>
-          </label>
-          <input
-            id="price-input"
-            type="number"
-            placeholder="Ej: 15000"
-            value={form.price || ''}
-            onChange={e => setForm(prev => ({ ...prev, price: parseInt(e.target.value) || 0 }))}
-            className="pn-input w-full rounded-xl border-2 px-4 py-3 text-base transition-all"
-            style={{
-              borderColor: '#E5E5E5',
-              backgroundColor: '#FAFAFA',
-              color: '#1A1A1A',
-            }}
-          />
-        </div>
-
-        {/* Date */}
-        <div className="mb-4">
-          <label className="block text-sm font-semibold mb-1.5" style={{ color: '#1A1A1A' }}>
-            Fecha
-          </label>
-          <input
-            id="date-input"
-            type="date"
-            value={form.date}
-            onChange={e => setForm(prev => ({ ...prev, date: e.target.value }))}
-            className="pn-input w-full rounded-xl border-2 px-4 py-3 text-base transition-all"
-            style={{
-              borderColor: '#E5E5E5',
-              backgroundColor: '#FAFAFA',
-              color: '#1A1A1A',
-            }}
-          />
-        </div>
-
-        {/* Time */}
-        <div className="mb-5">
-          <label className="block text-sm font-semibold mb-1.5" style={{ color: '#1A1A1A' }}>
-            Hora
-          </label>
-          <input
-            id="time-input"
-            type="time"
-            value={form.time}
-            onChange={e => setForm(prev => ({ ...prev, time: e.target.value }))}
-            className="pn-input w-full rounded-xl border-2 px-4 py-3 text-base transition-all"
-            style={{
-              borderColor: '#E5E5E5',
-              backgroundColor: '#FAFAFA',
-              color: '#1A1A1A',
-            }}
-          />
-        </div>
-
-        {/* Error */}
-        {error && (
-          <div
-            className="mb-4 rounded-xl px-4 py-3 text-sm text-center font-medium"
-            style={{ backgroundColor: '#F5F5F5', color: '#1A1A1A' }}
-          >
-            {error}
-          </div>
-        )}
-
-        {/* Actions */}
-        <div className="flex gap-3">
-          <button
-            id="btn-cancel"
-            onClick={onClose}
-            disabled={loading}
-            className="flex-1 rounded-2xl py-3.5 font-bold text-base transition-all hover:opacity-80 border-2"
-            style={{ borderColor: '#E5E5E5', backgroundColor: '#FAFAFA', color: '#1A1A1A' }}
-          >
-            Cancelar
-          </button>
-          <button
-            id="btn-save"
-            onClick={handleSave}
-            disabled={loading}
-            className="flex-1 rounded-2xl py-3.5 font-bold text-base text-white transition-all hover:opacity-90"
-            style={{ backgroundColor: '#1A1A1A' }}
-          >
-            {loading ? 'Guardando…' : 'Guardar'}
-          </button>
         </div>
       </div>
     </div>

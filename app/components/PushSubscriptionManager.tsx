@@ -101,26 +101,26 @@ export default function PushSubscriptionManager() {
         <div
           className="rounded-2xl p-4 flex items-start gap-3 shadow-lg"
           style={{
-            backgroundColor: '#FAFAFA',
-            border: '1.5px solid #E5E5E5',
-            boxShadow: '0 8px 32px rgba(26, 26, 26, 0.15)',
+            backgroundColor: '#fffdf9',
+            border: '1.5px solid #e7dfd1',
+            boxShadow: '0 8px 32px rgba(16, 14, 19, 0.15)',
           }}
         >
           <span className="text-2xl flex-shrink-0 mt-0.5">📲</span>
           <div className="flex-1 min-w-0">
-            <p className="font-bold text-sm" style={{ color: '#1A1A1A' }}>
+            <p className="font-bold text-sm" style={{ color: '#1d1a20' }}>
               Abre la app desde el ícono
             </p>
-            <p className="text-xs mt-1 leading-snug" style={{ color: '#666666' }}>
-              Para recibir notificaciones en iPhone, abrí la app desde el ícono en tu pantalla de inicio (no desde Safari).
+            <p className="text-xs mt-1 leading-snug" style={{ color: '#857b70' }}>
+              Para recibir notificaciones en iPhone, abre la app desde el ícono en tu pantalla de inicio (no desde Safari).
             </p>
-            <p className="text-xs mt-1 leading-snug" style={{ color: '#666666' }}>
-              ¿No lo agregaste aún? Tocá el botón <strong>Compartir 〔⬆︎〕</strong> y luego <strong>«Agregar a pantalla de inicio»</strong>.
+            <p className="text-xs mt-1 leading-snug" style={{ color: '#857b70' }}>
+              ¿Todavía no lo agregas? Toca el botón <strong>Compartir 〔⬆︎〕</strong> y luego <strong>«Agregar a pantalla de inicio»</strong>.
             </p>
             <button
               onClick={handleDismissIOSGuide}
-              className="mt-3 w-full rounded-xl py-2 text-xs font-bold transition-all border-2"
-              style={{ backgroundColor: '#FAFAFA', borderColor: '#E5E5E5', color: '#1A1A1A' }}
+              className="mt-3 w-full rounded-full py-2 text-xs font-bold transition-all border-2"
+              style={{ backgroundColor: '#fff', borderColor: '#e7dfd1', color: '#1d1a20' }}
             >
               Entendido
             </button>
@@ -140,33 +140,33 @@ export default function PushSubscriptionManager() {
         <div
           className="rounded-2xl p-4 flex items-start gap-3 shadow-lg"
           style={{
-            backgroundColor: '#FAFAFA',
-            border: '1.5px solid #E5E5E5',
-            boxShadow: '0 8px 32px rgba(26, 26, 26, 0.1)',
+            backgroundColor: '#fffdf9',
+            border: '1.5px solid #e7dfd1',
+            boxShadow: '0 8px 32px rgba(16, 14, 19, 0.1)',
           }}
         >
           <span className="text-2xl flex-shrink-0 mt-0.5">🔔</span>
           <div className="flex-1 min-w-0">
-            <p className="font-bold text-sm" style={{ color: '#1A1A1A' }}>
+            <p className="font-bold text-sm" style={{ color: '#1d1a20' }}>
               Activar recordatorios
             </p>
-            <p className="text-xs mt-0.5 leading-snug" style={{ color: '#666666' }}>
+            <p className="text-xs mt-0.5 leading-snug" style={{ color: '#857b70' }}>
               Recibe notificaciones 24 h antes de cada cita para no olvidar ninguna.
             </p>
             <div className="flex gap-2 mt-3">
               <button
                 id="btn-allow-notifications"
                 onClick={handleAllow}
-                className="flex-1 rounded-xl py-2 text-xs font-bold text-white transition-all hover:opacity-90"
-                style={{ backgroundColor: '#1A1A1A' }}
+                className="flex-1 rounded-full py-2 text-xs font-bold text-white transition-all hover:opacity-90"
+                style={{ backgroundColor: '#100e13', color: '#f3ece0' }}
               >
                 Activar
               </button>
               <button
                 id="btn-dismiss-notifications"
                 onClick={handleDismiss}
-                className="flex-1 rounded-xl py-2 text-xs font-bold transition-all hover:opacity-80 border-2"
-                style={{ backgroundColor: '#FAFAFA', borderColor: '#E5E5E5', color: '#1A1A1A' }}
+                className="flex-1 rounded-full py-2 text-xs font-bold transition-all hover:opacity-80 border-2"
+                style={{ backgroundColor: '#fff', borderColor: '#e7dfd1', color: '#1d1a20' }}
               >
                 Ahora no
               </button>

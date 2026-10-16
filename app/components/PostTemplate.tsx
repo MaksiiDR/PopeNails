@@ -1,11 +1,8 @@
 'use client'
 
 import { useCallback, useEffect, useRef, useState } from 'react'
-import { Cormorant_Garamond, Cinzel } from 'next/font/google'
-
-// Fuentes del post (se usan dentro del canvas, por eso se leen por nombre de familia)
-const cormorant = Cormorant_Garamond({ subsets: ['latin'], weight: ['500'], style: ['normal', 'italic'], display: 'swap' })
-const cinzel = Cinzel({ subsets: ['latin'], weight: ['500'], display: 'swap' })
+import { cormorant, cinzel } from '@/lib/fonts'
+// Las fuentes del post se usan dentro del canvas, por eso se leen por nombre de familia
 
 const W = 1080
 const H = 1350
@@ -408,20 +405,20 @@ export default function PostTemplate() {
 
   const segBtn = (active: boolean) =>
     `rounded-xl py-2.5 text-sm font-semibold transition-colors ${
-      active ? 'bg-[#1A1A1A] text-white' : 'bg-[#F5F5F5] text-[#1A1A1A] active:bg-gray-200'
+      active ? 'bg-pn-ink text-[#f3ece0]' : 'bg-pn-ivory text-pn-text active:bg-pn-line'
     }`
-  const field = 'w-full rounded-xl border border-[#E5E5E5] bg-white px-3.5 py-3 text-[15px] text-[#1A1A1A] outline-none focus:border-[#1A1A1A]'
-  const sectionTitle = 'text-xs font-bold uppercase tracking-wide text-[#666666] mb-2.5'
+  const field = 'pn-input'
+  const sectionTitle = 'pn-label text-pn-gold mb-3'
 
   return (
     <div className="space-y-5">
-      <label className="flex items-center justify-center gap-2 w-full rounded-2xl bg-[#1A1A1A] text-white font-bold py-3.5 cursor-pointer active:scale-[.99] transition-transform">
+      <label className="flex items-center justify-center gap-2 w-full rounded-full bg-pn-ink text-[#f3ece0] font-bold py-3.5 cursor-pointer active:scale-[.99] transition-transform">
         <span>📷</span> Subir foto de la clienta
         <input type="file" accept="image/*" className="sr-only" onChange={onFile} />
       </label>
 
       {/* Vista previa fija arriba mientras se ajusta */}
-      <div className="sticky top-[88px] z-30 -mx-4 px-4 pt-1 pb-3 bg-[#FAFAFA]">
+      <div className="sticky top-[calc(env(safe-area-inset-top,0px)+80px)] z-30 -mx-4 px-4 pt-2 pb-3 bg-pn-ivory border-b border-pn-line">
         <canvas
           ref={canvasRef}
           width={W}
@@ -430,20 +427,20 @@ export default function PostTemplate() {
           onPointerMove={onPointerMove}
           onPointerUp={endDrag}
           onPointerCancel={endDrag}
-          className="block mx-auto rounded-xl shadow-md bg-[#0b0a0d] cursor-grab"
+          className="block mx-auto rounded-xl shadow-[0_10px_30px_rgba(16,14,19,0.25)] bg-[#0b0a0d] cursor-grab"
           style={{ height: 'min(40vh, 400px)', width: 'auto', aspectRatio: '4 / 5', maxWidth: '100%', touchAction: 'none' }}
           aria-label="Vista previa del post"
         />
-        <p className="text-center text-xs text-[#666666] mt-2">Arrastra la foto para encuadrarla</p>
+        <p className="text-center text-xs text-pn-muted mt-2">Arrastra la foto para encuadrarla</p>
       </div>
 
-      <section className="rounded-2xl bg-white border border-[#E5E5E5] p-4 space-y-3">
+      <section className="rounded-2xl bg-pn-paper border border-pn-line p-4 space-y-3">
         <h2 className={sectionTitle}>Texto</h2>
-        <label className="block text-sm text-[#666666]">
+        <label className="block text-[13px] font-bold text-pn-text">
           Nombre del diseño
-          <input className={field + ' mt-1'} value={design} maxLength={32} onChange={e => setDesign(e.target.value)} placeholder="Ej: French cromado" />
+          <input className={field + ' mt-1.5'} value={design} maxLength={32} onChange={e => setDesign(e.target.value)} placeholder="Ej: French cromado" />
         </label>
-        <label className="block text-sm text-[#666666]">
+        <label className="block text-[13px] font-bold text-pn-text">
           Servicio
           <select className={field + ' mt-1'} value={service} onChange={e => setService(e.target.value)}>
             <option value="Softgel">Softgel</option>
@@ -451,13 +448,13 @@ export default function PostTemplate() {
             <option value="">Sin servicio</option>
           </select>
         </label>
-        <label className="block text-sm text-[#666666]">
+        <label className="block text-[13px] font-bold text-pn-text">
           Para (opcional)
           <input className={field + ' mt-1'} value={client} maxLength={24} onChange={e => setClient(e.target.value)} placeholder="Nombre de la clienta" />
         </label>
       </section>
 
-      <section className="rounded-2xl bg-white border border-[#E5E5E5] p-4">
+      <section className="rounded-2xl bg-pn-paper border border-pn-line p-4">
         <h2 className={sectionTitle}>Estilo</h2>
         <div className="grid grid-cols-3 gap-2">
           {(
@@ -474,7 +471,7 @@ export default function PostTemplate() {
         </div>
       </section>
 
-      <section className="rounded-2xl bg-white border border-[#E5E5E5] p-4 space-y-4">
+      <section className="rounded-2xl bg-pn-paper border border-pn-line p-4 space-y-4">
         <h2 className={sectionTitle}>Foto</h2>
         <div className="grid grid-cols-2 gap-2">
           <button type="button" className={segBtn(isRec)} aria-pressed={isRec} onClick={() => setAdj(RECOMENDADO)}>
@@ -484,17 +481,17 @@ export default function PostTemplate() {
             Sin ajustes
           </button>
         </div>
-        <label className="block text-sm text-[#666666]">
+        <label className="block text-[13px] font-bold text-pn-text">
           <span className="flex justify-between">
-            Zoom <span className="tabular-nums text-[#1A1A1A]">{zoom.toFixed(1)}×</span>
+            Zoom <span className="tabular-nums text-pn-muted font-semibold">{zoom.toFixed(1)}×</span>
           </span>
-          <input type="range" min={1} max={3} step={0.01} value={zoom} onChange={e => setZoom(+e.target.value)} className="w-full accent-[#1A1A1A]" />
+          <input type="range" min={1} max={3} step={0.01} value={zoom} onChange={e => setZoom(+e.target.value)} className="w-full accent-[#a8844b]" />
         </label>
         {ADJ_LABELS.map(({ key, label: t }) => (
-          <label key={key} className="block text-sm text-[#666666]">
+          <label key={key} className="block text-[13px] font-bold text-pn-text">
             <span className="flex justify-between">
               {t}
-              <span className="tabular-nums text-[#1A1A1A]">
+              <span className="tabular-nums text-pn-muted font-semibold">
                 {adj[key] > 0 ? '+' : ''}
                 {adj[key]}
               </span>
@@ -506,42 +503,42 @@ export default function PostTemplate() {
               step={1}
               value={adj[key]}
               onChange={e => setAdj(a => ({ ...a, [key]: +e.target.value }))}
-              className="w-full accent-[#1A1A1A]"
+              className="w-full accent-[#a8844b]"
             />
           </label>
         ))}
       </section>
 
-      <button type="button" onClick={save} className="w-full rounded-2xl bg-[#1A1A1A] text-white font-bold py-4 active:scale-[.99] transition-transform">
+      <button type="button" onClick={save} className="w-full rounded-full bg-pn-ink text-[#f3ece0] font-bold py-4 shadow-[0_10px_30px_rgba(16,14,19,0.25)] active:scale-[.99] transition-transform">
         Guardar post
       </button>
-      {msg && <p className="text-center text-sm text-[#666666]" role="status">{msg}</p>}
+      {msg && <p className="text-center text-sm text-pn-muted" role="status">{msg}</p>}
       {fallbackUrl && (
         <div className="text-center space-y-2">
-          <p className="text-xs text-[#666666]">Mantén presionada la imagen para guardarla:</p>
+          <p className="text-xs text-pn-muted">Mantén presionada la imagen para guardarla:</p>
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img src={fallbackUrl} alt="Post listo para guardar" className="mx-auto max-w-[240px] rounded-lg" />
         </div>
       )}
 
-      <section className="rounded-2xl bg-white border border-[#E5E5E5] p-4 space-y-3">
+      <section className="rounded-2xl bg-pn-paper border border-pn-line p-4 space-y-3">
         <div className="flex items-center justify-between">
           <h2 className={sectionTitle + ' mb-0'}>Footer del caption</h2>
-          <span className="text-xs text-[#666666]">Hashtags de {service || 'diseño'}</span>
+          <span className="text-xs text-pn-muted">Hashtags de {service || 'diseño'}</span>
         </div>
-        <pre className="whitespace-pre-wrap break-words rounded-xl bg-[#F5F5F5] p-3 text-[13px] leading-relaxed text-[#1A1A1A] font-[inherit] select-all">
+        <pre className="whitespace-pre-wrap break-words rounded-xl bg-pn-ivory border border-pn-line p-3 text-[13px] leading-relaxed text-pn-text font-[inherit] select-all">
           {footer}
         </pre>
         <button
           type="button"
           onClick={copyFooter}
-          className={`w-full rounded-2xl font-bold py-3.5 border transition-colors ${
-            copied ? 'bg-[#1A1A1A] text-white border-[#1A1A1A]' : 'bg-white text-[#1A1A1A] border-[#1A1A1A]'
+          className={`w-full rounded-full font-bold py-3.5 border-[1.5px] transition-colors ${
+            copied ? 'bg-pn-ink text-[#f3ece0] border-pn-ink' : 'bg-white text-pn-text border-pn-ink'
           }`}
         >
           {copied ? '✓ Footer copiado' : 'Copiar footer'}
         </button>
-        <p className="text-xs text-[#666666]">Pégalo al final del caption en Instagram. Los hashtags cambian según el servicio elegido.</p>
+        <p className="text-xs text-pn-muted">Pégalo al final del caption en Instagram. Los hashtags cambian según el servicio elegido.</p>
       </section>
     </div>
   )
