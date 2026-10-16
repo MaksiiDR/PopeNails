@@ -145,19 +145,14 @@ export default function HomePage() {
               </nav>
             </div>
 
-            <p className="pn-label text-pn-goldsoft mt-6">{todayLabel}</p>
-            <div className="flex items-end justify-between gap-4 mt-1.5">
-              <h1 className="font-display text-[40px] leading-[0.95] font-medium">
-                Tu <em className="text-pn-goldsoft font-medium">agenda</em>
-              </h1>
-              <div className="text-right shrink-0 pb-1">
-                <span className="font-display text-[34px] leading-none font-semibold [font-variant-numeric:lining-nums]">
+            <div className="flex items-center justify-between gap-4 mt-6">
+              <h1 className="pn-label text-pn-goldsoft">{todayLabel}</h1>
+              <p className="shrink-0 text-[13px] text-white/70">
+                <strong className="font-display text-[22px] font-semibold text-[#f3ece0] [font-variant-numeric:lining-nums] mr-1">
                   {loading ? '—' : upcomingAppointmentsCount}
-                </span>
-                <span className="block pn-label text-[9px] text-white/60 mt-1">
-                  {upcomingAppointmentsCount === 1 ? 'Cita próxima' : 'Citas próximas'}
-                </span>
-              </div>
+                </strong>
+                {upcomingAppointmentsCount === 1 ? 'cita próxima' : 'citas próximas'}
+              </p>
             </div>
 
             {/* Próxima cita */}
